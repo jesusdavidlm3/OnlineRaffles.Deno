@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root{
+  --baseColor: #1b263b;
+  --componentColor: #415a77;
+  --elementColor: #778da9;
+}
+
+.errorPage{
+  background-color: tomato;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body{
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  color: white;
+}
+
+button{
+  padding: 10px;
+  border-radius: 7px;
+  background-color: var(--baseColor);
+  border: none;
+  color: white;
+}
+
+input{
+  background-color: #778da9;
+  border: 3px solid #1b263b;
+  border-radius: 10px;
+  width: 90%;
+  height: 30px;
+}
+
+input::placeholder{
+  color: white;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
+
+h1{
+  margin: 0;
+}
+
+.PageBasis{
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--baseColor);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0 0 0;
+  gap: 15px;
+}
+
+.ModalBase{
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  transition: all ease 0.3s;
+}
+
+.UserAgreeModal{
+  width: calc(80vw - 30px);
+  height: calc(55vh - 30px);
+  background-color: var(--componentColor);
+  padding: 15px;
+  border-radius: 20px;
+  transition: all ease 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.UserAgreeModal p{
+  margin: 0;
+}
+
+.NavBar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--componentColor);
+  padding: 10px;
+  width: calc(100vw - 20px);
+  height: calc(10vh - 20px);
+}
+
+.NavBar .menuIcon{
+  width: 20px;
+}
+
+.NavBar .menuBackDrop{
+  /* z-index: 3; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.NavBar .menuBackDrop .hiddenMenu{
+  /* z-index: 5; */
+  background-color: var(--componentColor);
+  height: calc(100vh - 30px);
+  width: calc(40vw - 30px);
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding: 25px 10px 15px 15px;
+  gap: 20px;
+  text-align: end;
+}
+
+.NavBar .hideMenu{
+  animation: blendOut 1s forwards;
+}
+
+.NavBar .ShowMenu{
+  animation: showMenu 1s forwards;
+}
+
+.listContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.listContainer .listItem{
+  width: 80vw;
+  background-color: var(--elementColor);
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.Buyer{
+  background-color: var(--componentColor);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(85vw - 20px);
+  padding: 20px;
+  border-radius: 10px;
+  gap: 15px;
+}
+
+.Buyer .Selector{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  border-radius: 20px;
+  background-color: var(--elementColor);
+}
+
+.Buyer .Selector button{
+  height: 100%;
+  font-size: 5vw;
+  width: 20vw;
+}
+
+.Buyer .Selector .MinusButton{border-radius: 20px 0 0 20px;}
+.Buyer .Selector .PlusButton{border-radius: 0 20px 20px 0;}
+
+.Buyer form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.blendOut{
+  opacity: 1;
+  animation: blendOut 0.3s forwards;
+}
+
+.reduce{
+  scale: 1;
+  animation: reduce 0.3s forwards;
+}
+
+@keyframes blendOut {
+  to { opacity: 0; display: none;}
+}
+
+@keyframes reduce { 
+  to { scale: 0; }
+}
+
+@keyframes hideMenu {
+  to { transform: translateX(100%); display: none;}
+}
+
+@keyframes showMenu {
+  to { transform: translateX(0%); display: flex; }
+}
+
+.NavBar .hidden{display: none;} 
