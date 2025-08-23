@@ -1,5 +1,10 @@
 export interface Iticket{
-    id: string,
+    id?: string,
     name: string,
-    number: number,
+    identification: number
+    raffleId: string,
+    phone: string,
+    email: string,
+    number: number[],
+    receipt?: string
 }
