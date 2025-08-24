@@ -8,11 +8,15 @@ import * as $Support from "./routes/Support.tsx";
 import * as $Verify from "./routes/Verify.tsx";
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_buyRandomTicket from "./routes/api/buyRandomTicket.ts";
+import * as $api_buySelectedTickets from "./routes/api/buySelectedTickets.ts";
 import * as $api_joke from "./routes/api/joke.ts";
 import * as $index from "./routes/index.tsx";
 import * as $raffle_raffleId_ from "./routes/raffle/[raffleId].tsx";
 import * as $Buyer from "./islands/Buyer.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
+import * as $RandomTickets from "./islands/RandomTickets.tsx";
+import * as $TicketsSelector from "./islands/TicketsSelector.tsx";
 import * as $UserAgreementsModal from "./islands/UserAgreementsModal.tsx";
 import * as $Verifier from "./islands/Verifier.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -25,6 +29,8 @@ const manifest = {
     "./routes/Verify.tsx": $Verify,
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/buyRandomTicket.ts": $api_buyRandomTicket,
+    "./routes/api/buySelectedTickets.ts": $api_buySelectedTickets,
     "./routes/api/joke.ts": $api_joke,
     "./routes/index.tsx": $index,
     "./routes/raffle/[raffleId].tsx": $raffle_raffleId_,
@@ -32,6 +38,8 @@ const manifest = {
   islands: {
     "./islands/Buyer.tsx": $Buyer,
     "./islands/NavBar.tsx": $NavBar,
+    "./islands/RandomTickets.tsx": $RandomTickets,
+    "./islands/TicketsSelector.tsx": $TicketsSelector,
     "./islands/UserAgreementsModal.tsx": $UserAgreementsModal,
     "./islands/Verifier.tsx": $Verifier,
   },
