@@ -2,8 +2,8 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $Accounts from "./routes/Accounts.tsx";
 import * as $Raffles from "./routes/Raffles.tsx";
+import * as $SuccessfulPucharse from "./routes/SuccessfulPucharse.tsx";
 import * as $Support from "./routes/Support.tsx";
 import * as $Verify from "./routes/Verify.tsx";
 import * as $_404 from "./routes/_404.tsx";
@@ -23,8 +23,8 @@ import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
-    "./routes/Accounts.tsx": $Accounts,
     "./routes/Raffles.tsx": $Raffles,
+    "./routes/SuccessfulPucharse.tsx": $SuccessfulPucharse,
     "./routes/Support.tsx": $Support,
     "./routes/Verify.tsx": $Verify,
     "./routes/_404.tsx": $_404,

@@ -13,7 +13,6 @@ export default function NavBar(){
                     <img src="/menu-icon.png" class="menuIcon" onClick={() => setShowMenu("hideMenu")}/>
                     <a href="/">Inicio</a>
                     <a href="/Verify">Verificar tickets</a>
-                    <a href="/Accounts">Numeros de cuenta</a>
                     <a href="/Support">Soporte</a>
                 </div>
             </div>

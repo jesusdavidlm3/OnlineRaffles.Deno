@@ -57,6 +57,6 @@ export const handler: Handlers = {
 
         console.log(error)
 
-        return new Response("okokok")
+        return new Response("Compra exitosa", {status: 201})
     }
 }

@@ -16,6 +16,21 @@
   justify-content: center;
 }
 
+.SuccessfulPucharse{
+  background-color: green;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.SuccessfulPucharse img{
+  width: 50vw;
+}
+
 body{
   margin: 0;
   font-family: "Nunito", sans-serif;
