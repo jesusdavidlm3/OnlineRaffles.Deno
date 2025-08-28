@@ -6,5 +6,7 @@ export interface Iticket{
     phone: string,
     email: string,
     number?: number[],
-    receipt?: string
+    receipt?: string,
+    ticketsQuantity: number,
+    dolarPrice: number
 }

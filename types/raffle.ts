@@ -5,5 +5,6 @@ export interface Iraffle{
     ticketPrice: number,
     description: string,
     ticketsLimit: number,
-    flyer: string
+    flyer: string,
+    minBuy: number
 }
