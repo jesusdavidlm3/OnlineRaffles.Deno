@@ -5,10 +5,12 @@ import { supabase } from "../libs/supabase.ts";
 import { Iraffle } from "../types/raffle.ts";
 import Footer from "../components/Footer.tsx"
 
+const supabaseUrl = Deno.env.get("supabase_url")
+
 export const handler: Handlers = {
   async GET(_req, ctx){
     const {data: raffleList, error} = await supabase.from("raffles").select("*").is("status", true);
-    return ctx.render({...raffleList![0], flyer: `https://pttisgtwblfhcmmufhnf.supabase.co/storage/v1/object/public/files/raffles/${raffleList[0].flyer}`});
+    return ctx.render({...raffleList![0], flyer: `${supabaseUrl}/storage/v1/object/public/${raffleList[0].flyer}`});
   }
 }
 

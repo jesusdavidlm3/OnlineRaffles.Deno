@@ -10,7 +10,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_buyRandomTicket from "./routes/api/buyRandomTicket.ts";
 import * as $api_buySelectedTickets from "./routes/api/buySelectedTickets.ts";
-import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_verifyTicket from "./routes/api/verifyTicket.ts";
 import * as $index from "./routes/index.tsx";
 import * as $raffle_raffleId_ from "./routes/raffle/[raffleId].tsx";
 import * as $Buyer from "./islands/Buyer.tsx";
@@ -31,7 +31,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/api/buyRandomTicket.ts": $api_buyRandomTicket,
     "./routes/api/buySelectedTickets.ts": $api_buySelectedTickets,
-    "./routes/api/joke.ts": $api_joke,
+    "./routes/api/verifyTicket.ts": $api_verifyTicket,
     "./routes/index.tsx": $index,
     "./routes/raffle/[raffleId].tsx": $raffle_raffleId_,
   },

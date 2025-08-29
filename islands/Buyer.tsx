@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks"
 import RandomTickets from "./RandomTickets.tsx"
 import TicketsSelector from "./TicketsSelector.tsx"
+import Accounts from "../components/Accounts.tsx"
 
 export default function Buyer({ticketPrice = 1, raffleId}){
 
@@ -33,6 +34,8 @@ export default function Buyer({ticketPrice = 1, raffleId}){
                     changeMethod={() => setSelectionMethod(1)}
                 />
             }
+
+            <Accounts/>
         </>
     )
 }

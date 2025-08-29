@@ -1,6 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
 import { useState, useEffect } from "preact/hooks"
-import { Iticket } from "../types/ticket.ts";
 
 interface IrandomTickets{
     ticketPrice: number,
@@ -8,6 +7,8 @@ interface IrandomTickets{
     dolarPrice: number,
     changeMethod: () => void
 }
+
+// const apiUrl = Deno.env.get("front_url")
 
 export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, changeMethod}: IrandomTickets){
 
@@ -34,10 +35,11 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
         const fileInput = document.getElementById("fileInput")
         formData.append("receiptFile", fileInput.files[0])
 
-        const res = await fetch("http://localhost:8000/api/buyRandomTicket", {
+        const res = await fetch(`http://localhost:8000/api/buyRandomTicket`, {
             method: "post",
             body: formData,
         })
+        setLoading(false)
 
         if(res.status == 201){
             globalThis.location.replace("/SuccessfulPucharse")
@@ -69,6 +71,5 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
             <input name="receipts" type="file" accept="image/*, .pdf" id="fileInput" required disabled={loading}/>
             <button type="submit" disabled={loading}>{loading ? "Cargando":"Comprar"}</button>
         </form>
-
     </div>)
 }

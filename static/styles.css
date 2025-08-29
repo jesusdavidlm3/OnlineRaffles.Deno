@@ -288,3 +288,27 @@ h1{
 .Footer p{
   margin: 0;
 }
+
+.Accounts{
+  background-color: var(--componentColor);
+  width: calc(90vw - 30px);
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  text-align: center;
+  flex-direction: column;
+  border-radius: 10px;
+  gap: 0px;
+}
+
+.Accounts h2{
+  margin: 0;
+}
+
+.Accounts h3{
+  margin: 3px;
+}
+
+.Accounts img{
+  width: 70%;
+}
