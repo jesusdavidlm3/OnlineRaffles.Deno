@@ -6,6 +6,7 @@ import { Iraffle } from "../../types/raffle.ts";
 import Footer from "../../components/Footer.tsx"
 
 const supabaseUrl = Deno.env.get("supabase_url")
+const apiUrl = Deno.env.get("front_url")
 
 export const handler: Handlers = {
     async GET(_req, ctx){
@@ -28,6 +29,8 @@ export default function raffle(props: PageProps){
             <Buyer
                 ticketPrice={currentRaffle.ticketPrice}
                 raffleId={currentRaffle.id}
+                apiUrl={apiUrl!}
+                minBuy={currentRaffle.minBuy}
             />
             <Footer/>
         </div>

@@ -3,7 +3,17 @@ import RandomTickets from "./RandomTickets.tsx"
 import TicketsSelector from "./TicketsSelector.tsx"
 import Accounts from "../components/Accounts.tsx"
 
-export default function Buyer({ticketPrice = 1, raffleId}){
+interface Ibuyer{
+    ticketPrice?: number,
+    raffleId: string,
+    apiUrl: string,
+    minBuy: number
+}
+
+export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy}: Ibuyer){
+
+    // const dolarRaw = await fetch('https://ve.dolarapi.com/v1/dolares/oficial')
+    // const dolar = await dolarRaw.json()
 
     const [dolarPrice, setDolarPrice] = useState<number>()
     const [selectionMethod, setSelectionMethod] = useState<1 | 2>(1)
@@ -23,6 +33,8 @@ export default function Buyer({ticketPrice = 1, raffleId}){
                     raffleId={raffleId}
                     ticketPrice={ticketPrice}
                     changeMethod={() => setSelectionMethod(2)}
+                    apiUrl={apiUrl}
+                    minBuy={minBuy}
                 />
             }
 

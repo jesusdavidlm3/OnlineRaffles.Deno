@@ -184,6 +184,11 @@ h1{
   border-radius: 15px;
 }
 
+.listContainer h1, .listContainer h3{
+  margin: 0;
+}
+
+
 .RandomTickets{
   background-color: var(--componentColor);
   display: flex;
@@ -311,4 +316,23 @@ h1{
 
 .Accounts img{
   width: 70%;
+}
+
+.VerifyPage{
+  background-color: var(--componentColor);
+  display: flex;
+  margin-top: 10px;
+  width: 80vw;
+  min-height: 90vh;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 25px 20px 10px 20px;
+}
+
+.VerifyPage .ticket{
+  text-align: start;
+  width: 70vw;
 }
