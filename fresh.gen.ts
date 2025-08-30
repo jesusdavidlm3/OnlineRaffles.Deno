@@ -3,7 +3,7 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $Raffles from "./routes/Raffles.tsx";
-import * as $SuccessfulPucharse from "./routes/SuccessfulPucharse.tsx";
+import * as $SuccessfulPucharse_ticketId_ from "./routes/SuccessfulPucharse/[ticketId].tsx";
 import * as $Support from "./routes/Support.tsx";
 import * as $Verify from "./routes/Verify.tsx";
 import * as $_404 from "./routes/_404.tsx";
@@ -24,7 +24,7 @@ import type { Manifest } from "$fresh/server.ts";
 const manifest = {
   routes: {
     "./routes/Raffles.tsx": $Raffles,
-    "./routes/SuccessfulPucharse.tsx": $SuccessfulPucharse,
+    "./routes/SuccessfulPucharse/[ticketId].tsx": $SuccessfulPucharse_ticketId_,
     "./routes/Support.tsx": $Support,
     "./routes/Verify.tsx": $Verify,
     "./routes/_404.tsx": $_404,

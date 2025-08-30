@@ -1,6 +1,7 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
 import { supabase } from "../../libs/supabase.ts";
 import uploadReceipt from "../../functions/uploadReceipt.ts"
+import { crypto } from "@std/crypto/crypto";
 
 interface Idata{
     name: string,
@@ -14,6 +15,7 @@ interface Idata{
 
 export const handler: Handlers = {
     async POST(req: Request, ctx: FreshContext){
+        const uuid = crypto.randomUUID()
         const formData = await req.formData()
         const name = formData.get("name")?.toString()
         const identification = formData.get("identification")?.toString()
@@ -46,6 +48,7 @@ export const handler: Handlers = {
         }
 
         const {data, error} = await supabase.from("tickets").insert([{
+            id: uuid,
             name: name,
             identification: identification,
             raffleId: raffleId,
@@ -57,6 +60,6 @@ export const handler: Handlers = {
 
         console.log(error)
 
-        return new Response("Compra exitosa", {status: 201})
+        return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
     }
 }

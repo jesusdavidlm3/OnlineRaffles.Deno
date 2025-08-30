@@ -16,6 +16,10 @@
   justify-content: center;
 }
 
+.errorPage img{
+  width: 40vw;
+}
+
 .SuccessfulPucharse{
   background-color: green;
   width: 100dvw;

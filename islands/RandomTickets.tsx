@@ -41,8 +41,11 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
         })
         setLoading(false)
 
+        const ticketInfo = await res.json()
+        console.log(ticketInfo)
+
         if(res.status == 201){
-            globalThis.location.replace("/SuccessfulPucharse")
+            globalThis.location.replace(`/SuccessfulPucharse/${ticketInfo.id}`)
         }
     }
 
