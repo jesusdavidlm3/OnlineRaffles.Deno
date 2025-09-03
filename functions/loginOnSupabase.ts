@@ -1,12 +1,13 @@
 import { supabase } from "../libs/supabase.ts";
 
 export default async function loginOnSupabase(email: string, password: string){
-    const {data, error} = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-    })
+    const {data: user, error} = await supabase.from("users").select("*").eq("email", email)
     if(!error){
-        return data
+        if(user[0].password == password){
+            return true
+        }else{
+            return false
+        }
     }else{
         throw error
     }

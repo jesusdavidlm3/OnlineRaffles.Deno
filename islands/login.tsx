@@ -1,10 +1,16 @@
+import { encrypt } from "../libs/hash.ts"
+
 export default function LoginForm({apiUrl}){
 
     async function login(e: Event){
         e.preventDefault()
 
-        const form = e.target as HTMLFormElement
-        const formData = new FormData(form)
+        const formData = new FormData()
+        const passwordHash = await encrypt(e.target[1].value)
+
+        formData.append("email", e.target[0].value)
+        formData.append("password", passwordHash)
+
 
         const res = await fetch(`${apiUrl}/api/login`, {
             method: 'post',
