@@ -23,6 +23,7 @@
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "@std/crypto": "jsr:@std/crypto@^1.0.5",
+    "@std/http": "jsr:@std/http@^1.0.20",
     "@supabase/supabase-js": "jsr:@supabase/supabase-js@^2.55.0",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",

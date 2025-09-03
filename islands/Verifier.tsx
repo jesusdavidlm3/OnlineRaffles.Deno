@@ -26,9 +26,9 @@ export default function Verifier({apiUrl}: Iverifier){
                 <h1>Rifa: {item.title}</h1>
                 <h3>Cliente: {item.clientname}</h3>
                 <h3>Numeros: {item.numbers.map(item => <>{item}, </>)}</h3>
-                {item.ticketstatus == 0 && <h3>Pendiente por verificar pago</h3>}
-                {item.ticketstatus == 1 && <h3>Compra verificada</h3>}
-                {item.ticketstatus == 2 && <h3>Error en su pago</h3>}
+                {item.ticketstatus == 0 && <h3>⌛Pendiente por verificar pago</h3>}
+                {item.ticketstatus == 1 && <h3>✅Compra verificada</h3>}
+                {item.ticketstatus == 2 && <h3>🚫Error en su pago</h3>}
             </div>)}
         </div>
     </>)

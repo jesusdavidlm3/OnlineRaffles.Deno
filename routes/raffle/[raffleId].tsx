@@ -25,7 +25,7 @@ export default function raffle(props: PageProps){
         <div class="PageBasis">
             <h1>{currentRaffle.title}</h1>
             <img src={currentRaffle.flyer} class="flyer" draggable={false}/>
-            <p>{currentRaffle.description}</p>
+            <p style={{whiteSpace: 'pre-line'}}>{currentRaffle.description}</p>
             <Buyer
                 ticketPrice={currentRaffle.ticketPrice}
                 raffleId={currentRaffle.id}

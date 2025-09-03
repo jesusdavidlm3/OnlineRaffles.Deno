@@ -340,3 +340,67 @@ h1{
   text-align: start;
   width: 70vw;
 }
+
+.dashboardNavBar{
+  background-color: var(--componentColor);
+  width: calc(100vw - 20px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.dashboardNavBar .buttons{
+  display: flex;
+  gap: 15px;
+}
+
+.dashboardRaffleTile{
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.Dashboard .listContainer .listItem{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.Dashboard .listContainer .listItem .info h4{
+  margin: 0;
+}
+
+.Dashboard .listContainer .listItem .buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Dashboard form{
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--componentColor);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.Dashboard form label{
+  align-self: self-start;
+  margin-left: 2.5vw;
+}
+
+.Dashboard form button{
+  margin-top: 30px;
+}
+
+.Dashboard .listContainer .listItemMainDashboard{
+  justify-content: start;
+}

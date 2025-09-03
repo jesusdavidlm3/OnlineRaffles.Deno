@@ -2,6 +2,9 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $Dashboard_page_ from "./routes/Dashboard/[page].tsx";
+import * as $Dashboard_raffle_New from "./routes/Dashboard/raffle/New.tsx";
+import * as $Dashboard_raffle_raffleId_ from "./routes/Dashboard/raffle/[raffleId].tsx";
 import * as $Raffles from "./routes/Raffles.tsx";
 import * as $SuccessfulPucharse_ticketId_ from "./routes/SuccessfulPucharse/[ticketId].tsx";
 import * as $Support from "./routes/Support.tsx";
@@ -10,8 +13,12 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_buyRandomTicket from "./routes/api/buyRandomTicket.ts";
 import * as $api_buySelectedTickets from "./routes/api/buySelectedTickets.ts";
+import * as $api_createRaffle from "./routes/api/createRaffle.ts";
+import * as $api_getRafflesList from "./routes/api/getRafflesList.ts";
+import * as $api_login from "./routes/api/login.ts";
 import * as $api_verifyTicket from "./routes/api/verifyTicket.ts";
 import * as $index from "./routes/index.tsx";
+import * as $login from "./routes/login.tsx";
 import * as $raffle_raffleId_ from "./routes/raffle/[raffleId].tsx";
 import * as $Buyer from "./islands/Buyer.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
@@ -19,10 +26,14 @@ import * as $RandomTickets from "./islands/RandomTickets.tsx";
 import * as $TicketsSelector from "./islands/TicketsSelector.tsx";
 import * as $UserAgreementsModal from "./islands/UserAgreementsModal.tsx";
 import * as $Verifier from "./islands/Verifier.tsx";
+import * as $login_1 from "./islands/login.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
+    "./routes/Dashboard/[page].tsx": $Dashboard_page_,
+    "./routes/Dashboard/raffle/New.tsx": $Dashboard_raffle_New,
+    "./routes/Dashboard/raffle/[raffleId].tsx": $Dashboard_raffle_raffleId_,
     "./routes/Raffles.tsx": $Raffles,
     "./routes/SuccessfulPucharse/[ticketId].tsx": $SuccessfulPucharse_ticketId_,
     "./routes/Support.tsx": $Support,
@@ -31,8 +42,12 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/api/buyRandomTicket.ts": $api_buyRandomTicket,
     "./routes/api/buySelectedTickets.ts": $api_buySelectedTickets,
+    "./routes/api/createRaffle.ts": $api_createRaffle,
+    "./routes/api/getRafflesList.ts": $api_getRafflesList,
+    "./routes/api/login.ts": $api_login,
     "./routes/api/verifyTicket.ts": $api_verifyTicket,
     "./routes/index.tsx": $index,
+    "./routes/login.tsx": $login,
     "./routes/raffle/[raffleId].tsx": $raffle_raffleId_,
   },
   islands: {
@@ -42,6 +57,7 @@ const manifest = {
     "./islands/TicketsSelector.tsx": $TicketsSelector,
     "./islands/UserAgreementsModal.tsx": $UserAgreementsModal,
     "./islands/Verifier.tsx": $Verifier,
+    "./islands/login.tsx": $login_1,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
