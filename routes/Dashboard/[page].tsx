@@ -22,7 +22,7 @@ export const handler: Handlers = {
                 const response = await ctx.render({list: list, email: payload.email})
                 setCookie(response.headers, {
                     name: "token",
-                    value: payload.email,
+                    value: newToken,
                     path: "/"
                 })
                 return response

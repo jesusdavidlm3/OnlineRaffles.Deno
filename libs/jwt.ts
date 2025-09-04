@@ -17,7 +17,7 @@ export async function verifyAndRenewToken(token: string): Promise<string | false
 export async function createToken(email: string): Promise<string>{
     const payload = {
         email: email,
-        exp: Date.now() + (60 * 5)
+        exp: new Date(Date.now() + (60 * 5 * 1000))
     }
     const newToken = await createJwt(payload, secret!)
     return newToken
