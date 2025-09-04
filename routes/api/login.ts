@@ -1,7 +1,7 @@
 import { Handlers, FreshContext } from "$fresh/server.ts";
 import { setCookie } from "@std/http/cookie";
 import loginOnSupabase from "../../functions/loginOnSupabase.ts"
-import { createJwt, isJwtValid, isJwtExpired, getJwtPayload } from "@popov/jwt";
+import { createToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, ctx: FreshContext){
@@ -12,13 +12,7 @@ export const handler: Handlers = {
         const data = await loginOnSupabase(email, password)
 
         if(data === true){
-            const secret = Deno.env.get("secret")
-            const payload = {
-                email: email,
-                exp: Date.now() + (60 * 60)         //Expira en una hora
-            }
-            const token = await createJwt(payload, secret!)
-            console.log(token)
+            const token = await createToken(email)
             const headers = new Headers()
             const tokenCookie = {
                 name: 'token',

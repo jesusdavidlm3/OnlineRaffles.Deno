@@ -1,11 +1,11 @@
 import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
 import rafflesListForDashboard from "../../functions/rafflesListForDashboard.ts"
-import { getCookies } from "@std/http/cookie";
-import { createJwt, isJwtValid, isJwtExpired, getJwtPayload } from "@popov/jwt";
+import { getCookies, setCookie } from "@std/http/cookie";
+import { getJwtPayload } from "@popov/jwt";
+import { verifyAndRenewToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
-        const secret = Deno.env.get("secret")                       //Obtenemos el token
         const pagination = ctx.params.page
         const cookies = getCookies(req.headers)
         const token = cookies.token
@@ -13,14 +13,19 @@ export const handler: Handlers = {
         if(token == undefined){     
             return Response.redirect(`${Deno.env.get("front_url")}/`)
         }else{
-            const tokenValidation = await isJwtValid(token, secret!)
-            const tokenExp = isJwtExpired(token)
-            if(!tokenValidation || tokenExp){
+            const newToken = await verifyAndRenewToken(token)
+            if(newToken === false){
                 return Response.redirect(`${Deno.env.get("front_url")}/`)
             }else{
                 const payload = getJwtPayload(token)
                 const list = await rafflesListForDashboard(Number(pagination))
-                return ctx.render({list: list, email: payload.email})
+                const response = await ctx.render({list: list, email: payload.email})
+                setCookie(response.headers, {
+                    name: "token",
+                    value: payload.email,
+                    path: "/"
+                })
+                return response
             }
         }
     }

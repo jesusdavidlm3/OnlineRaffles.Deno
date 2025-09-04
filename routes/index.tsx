@@ -12,10 +12,10 @@ export const handler: Handlers = {
     const {data: raffleList, error} = await supabase.from("raffles").select("*").is("status", true);
     if(raffleList != undefined && raffleList.length > 0){
       const props = {...raffleList![0], flyer: `${supabaseUrl}/storage/v1/object/public/${raffleList[0].flyer}`}
+      return ctx.render(props);
     }else{
-      const props = {}
+      return ctx.render();
     }
-    return ctx.render();
   }
 }
 
