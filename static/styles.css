@@ -4,6 +4,7 @@
   --baseColor: #1b263b;
   --componentColor: #415a77;
   --elementColor: #778da9;
+  --baseColorHover: #233352;
 }
 
 .errorPage{
@@ -47,6 +48,12 @@ button{
   background-color: var(--baseColor);
   border: none;
   color: white;
+  transition: all ease .3s;
+}
+
+button:hover{
+  background-color: var(--baseColorHover);
+  cursor: pointer;
 }
 
 input{
@@ -357,12 +364,23 @@ h1{
 }
 
 .dashboardRaffleTile{
-  width: 100vw;
+  width: calc(100vw - 60px);
   display: flex;
   flex-direction: row;
   gap: 15px;
   align-items: center;
+  background-color: var(--componentColor);
+  margin: 5px;
+  padding: 15px;
+  border-radius: 15px;
 }
+
+.dashboardRaffleTile img{
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.dashboardRaffleTile h1, .dashboardRaffleTile h3{margin: 0;} 
 
 .Dashboard .listContainer .listItem{
   display: flex;
@@ -403,4 +421,38 @@ h1{
 
 .Dashboard .listContainer .listItemMainDashboard{
   justify-content: start;
+}
+
+.Dashboard .listContainer .listItemMainDashboard img{
+  max-width: 120px;
+  max-height: 120px;
+}
+
+.loginPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginPage .loginForm{
+  background-color: var(--componentColor);
+  width: 50vw;
+  height: 65vh;
+  padding: 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+}
+
+.loginPage .loginForm label{
+  align-self: flex-start;
+  margin-left: 35px;
+  margin-top: 30px;
+}
+
+.loginPage .loginForm button{
+  margin: 20px;
 }

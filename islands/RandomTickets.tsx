@@ -33,7 +33,8 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("raffleId", raffleId.toString())
         const fileInput = document.getElementById("fileInput")
-        formData.append("receiptFile", fileInput.files[0])
+        formData.append("receiptFile", fileInput!.files[0])
+        formData.append("dolarPrice", dolarPrice.toString())
 
         const res = await fetch(`${apiUrl}/api/buyRandomTicket`, {
             method: "post",

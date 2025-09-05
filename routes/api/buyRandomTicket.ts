@@ -55,6 +55,7 @@ export const handler: Handlers = {
             phone: phone,
             email: email,
             numbers: numbersToSell,
+            dolarPrice: dolarPrice,
             receipt: receiptRes?.fullPath
         }]).select()
 

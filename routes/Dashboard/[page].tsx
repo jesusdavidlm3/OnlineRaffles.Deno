@@ -6,20 +6,23 @@ import { verifyAndRenewToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
+        const apiUrl = Deno.env.get("front_url")
+        const supabaseUrl = Deno.env.get("supabase_url")
+
         const pagination = ctx.params.page
         const cookies = getCookies(req.headers)
         const token = cookies.token
         
         if(token == undefined){     
-            return Response.redirect(`${Deno.env.get("front_url")}/`)
+            return Response.redirect(`${apiUrl}/`)
         }else{
             const newToken = await verifyAndRenewToken(token)
             if(newToken === false){
-                return Response.redirect(`${Deno.env.get("front_url")}/`)
+                return Response.redirect(`${apiUrl}/`)
             }else{
                 const payload = getJwtPayload(token)
                 const list = await rafflesListForDashboard(Number(pagination))
-                const response = await ctx.render({list: list, email: payload.email})
+                const response = await ctx.render({list: list, email: payload.email, imageUrl: `${supabaseUrl}/storage/v1/object/public/`})
                 setCookie(response.headers, {
                     name: "token",
                     value: newToken,
@@ -45,8 +48,8 @@ export default function DashboardPage(props: PageProps){
             <div class="listContainer">
                 {data.list.map(item => 
                     <a href={`/Dashboard/raffle/${item.id}`} class="listItem listItemMainDashboard">
-                        <img/>
-                        <h3>{item.title}</h3>
+                        <img src={`${data.imageUrl}${item.flyer}`}/>
+                        <h1>{item.title}</h1>
                     </a>
                 )}
             </div>

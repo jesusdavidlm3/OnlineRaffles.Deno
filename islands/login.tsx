@@ -23,9 +23,9 @@ export default function LoginForm({apiUrl}){
     }
 
     return(
-        <div class="PageBasis">
-            <h1>Inicio de sesion</h1>
-            <form onSubmit={login}>
+        <div class="PageBasis loginPage">
+            <form onSubmit={login} class="loginForm">
+                <h1>Inicio de sesion</h1>
                 <label>Correo Electronico:</label>
                 <input type="email" required name="email"/>
                 <label>Contraseña:</label>

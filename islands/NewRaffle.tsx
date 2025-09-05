@@ -20,17 +20,17 @@ export default function NewRaffle({apiUrl}){
     return(
         <form onSubmit={submitForm}>
             <label>Titulo:</label>
-            <input name="title"/>
+            <input required name="title"/>
             <label>Descripcion:</label>
-            <input name="description"/>
+            <input required name="description"/>
             <label>Precio del numero:</label>
-            <input name="ticketPrice"/>
+            <input required name="ticketPrice"/>
             <label>Minimo de numeros por compra:</label>
-            <input name="minBuy"/>
+            <input required name="minBuy"/>
             <label>Cantidad total de numeros:</label>
-            <input name="ticketsLimit"/>
+            <input required name="ticketsLimit"/>
             <label>Flyer:</label>
-            <input name="flyer" type="file" id="flyer" />
+            <input required name="flyer" type="file" id="flyer" />
             <button type="submit">Crear rifa</button>
         </form>
     )
