@@ -159,7 +159,7 @@ h1{
   flex-direction: row-reverse;
 }
 
-.NavBar .menuBackDrop .hiddenMenu{
+.NavBar .menuBackDrop .menu{
   /* z-index: 5; */
   background-color: var(--componentColor);
   height: calc(100vh - 30px);
@@ -174,11 +174,13 @@ h1{
 }
 
 .NavBar .hideMenu{
-  animation: blendOut 1s forwards;
+  animation: hideMenu .5s forwards;
 }
 
-.NavBar .ShowMenu{
-  animation: showMenu 1s forwards;
+.NavBar .showMenu{
+  position: relative;
+  left: 39%;
+  animation: showMenu .5s forwards;
 }
 
 .listContainer{
@@ -270,6 +272,11 @@ h1{
   animation: blendOut 0.3s forwards;
 }
 
+.blendIn{
+  opacity: 0;
+  animation: blendIn 0.3s forwards;
+}
+
 .reduce{
   scale: 1;
   animation: reduce 0.3s forwards;
@@ -277,6 +284,10 @@ h1{
 
 @keyframes blendOut {
   to { opacity: 0; display: none;}
+}
+
+@keyframes blendIn {
+  to { opacity: 1; display: flex;}
 }
 
 @keyframes reduce { 
@@ -288,10 +299,11 @@ h1{
 }
 
 @keyframes showMenu {
-  to { transform: translateX(0%); display: flex; }
+  to { transform: translateX(-100%); display: flex;}
 }
 
 .NavBar .hidden{display: none;} 
+
 
 .Footer{
   background-color: var(--componentColor);
