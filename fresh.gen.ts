@@ -14,6 +14,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $api_buyRandomTicket from "./routes/api/buyRandomTicket.ts";
 import * as $api_buySelectedTickets from "./routes/api/buySelectedTickets.ts";
 import * as $api_confirmPayment from "./routes/api/confirmPayment.ts";
+import * as $api_deactivateRaffle from "./routes/api/deactivateRaffle.ts";
 import * as $api_getPendingPaymentsList from "./routes/api/getPendingPaymentsList.ts";
 import * as $api_getRejectedPaymentsList from "./routes/api/getRejectedPaymentsList.ts";
 import * as $api_login from "./routes/api/login.ts";
@@ -24,6 +25,7 @@ import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $raffle_raffleId_ from "./routes/raffle/[raffleId].tsx";
 import * as $Buyer from "./islands/Buyer.tsx";
+import * as $DeactivateRaffleButton from "./islands/DeactivateRaffleButton.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
 import * as $NewRaffle from "./islands/NewRaffle.tsx";
 import * as $PendingPaymentsList from "./islands/PendingPaymentsList.tsx";
@@ -48,6 +50,7 @@ const manifest = {
     "./routes/api/buyRandomTicket.ts": $api_buyRandomTicket,
     "./routes/api/buySelectedTickets.ts": $api_buySelectedTickets,
     "./routes/api/confirmPayment.ts": $api_confirmPayment,
+    "./routes/api/deactivateRaffle.ts": $api_deactivateRaffle,
     "./routes/api/getPendingPaymentsList.ts": $api_getPendingPaymentsList,
     "./routes/api/getRejectedPaymentsList.ts": $api_getRejectedPaymentsList,
     "./routes/api/login.ts": $api_login,
@@ -60,6 +63,7 @@ const manifest = {
   },
   islands: {
     "./islands/Buyer.tsx": $Buyer,
+    "./islands/DeactivateRaffleButton.tsx": $DeactivateRaffleButton,
     "./islands/NavBar.tsx": $NavBar,
     "./islands/NewRaffle.tsx": $NewRaffle,
     "./islands/PendingPaymentsList.tsx": $PendingPaymentsList,

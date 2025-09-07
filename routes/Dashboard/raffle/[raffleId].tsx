@@ -4,6 +4,7 @@ import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../../libs/jwt.ts";
 import { getJwtPayload } from "@popov/jwt";
 import PendingPaymentList from "../../../islands/PendingPaymentsList.tsx" 
+import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -36,7 +37,6 @@ export const handler: Handlers = {
 
 export  default function RaffleDashboard(props: PageProps){
     const raffle = props.data.raffle
-    const tickets = props.data.tickets
     const email = props.data.email
     const imageUrl = props.data.imageUrl
     const apiUrl = props.data.apiUrl
@@ -45,7 +45,6 @@ export  default function RaffleDashboard(props: PageProps){
             <div class="dashboardNavBar">
                 <h4>{email}</h4>
                 <div class="buttons">
-                    <button>Atras</button>
                     <button>Salir</button>
                 </div>
             </div>
@@ -53,11 +52,11 @@ export  default function RaffleDashboard(props: PageProps){
                 <img src={`${imageUrl}${raffle.flyer}`}/>
                 <div>
                     <h1>{raffle.title}</h1>
-                    <h3>Precio del numero: {raffle.ticketPrice}</h3>
+                    <h3>Precio del numero: ${raffle.ticketPrice}</h3>
                     <h3>Limite de numeros: {raffle.ticketsLimit}</h3>
                     <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
                 </div>
-                {raffle.status === false ? (<h4>Rifa cerrada</h4>):(<button>Desactivar</button>)}
+                {raffle.status === false ? (<h4>Rifa cerrada</h4>):(<DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>)}
             </div>
             {raffle.status == false ? (<h1>Pagos realizados</h1>):(<h1>Pagos pendientes</h1>)}
             

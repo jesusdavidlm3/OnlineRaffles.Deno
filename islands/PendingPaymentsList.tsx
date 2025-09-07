@@ -58,8 +58,9 @@ export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
                     <div class="info">
                         <h4>Nombre: {item.name}</h4>
                         <h4>Cedula: {item.identification}</h4>
-                        <h4>Dolar a la compra: {item.dolarPrice}</h4>
+                        <h4>Dolar a la compra: Bs. {Number(item.dolarPrice).toFixed(2)}</h4>
                         <h4>Numeros: {item.numbers.map(number => `${number}, `)}</h4>
+                        <h4>Monto cancelado: Bs. {Number(item.dolarPrice * item.numbers.length).toFixed(2)}</h4>
                         <h4>Telefono: {item.phone}</h4>
                         <h4>Correo: {item.email}</h4>
                     </div>
