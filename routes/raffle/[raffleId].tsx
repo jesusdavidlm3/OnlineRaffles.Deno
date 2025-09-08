@@ -31,6 +31,7 @@ export default function raffle(props: PageProps){
                 raffleId={currentRaffle.id}
                 apiUrl={apiUrl!}
                 minBuy={currentRaffle.minBuy}
+                raffleStatus={currentRaffle.status}
             />
             <Footer/>
         </div>

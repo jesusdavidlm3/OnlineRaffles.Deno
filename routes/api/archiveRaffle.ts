@@ -1,6 +1,6 @@
-import { Handlers, FreshContext } from "$fresh/server.ts";
-import { getCookies, setCookie } from "@std/http/cookie";
-import { verifyAndRenewToken } from "../../libs/jwt.ts";
+import { Handlers, FreshContext } from "$fresh/server.ts"
+import { setCookie, getCookies } from "@std/http/cookie"
+import { verifyAndRenewToken } from "../../libs/jwt.ts"
 import { supabase } from "../../libs/supabase.ts";
 
 export const handler: Handlers = {
@@ -13,16 +13,16 @@ export const handler: Handlers = {
             return Response.redirect(`${apiUrl}/`)
         }else{
             const reqData = await req.json()
-            const {data: data, error} = await supabase.from("raffles").update({status: 1}).eq("id", reqData.raffleId)
-            if(!error){
+            const {data: data, error} = await supabase.from("raffles").update({status: 2}).eq("id", reqData.raffleId)
+            if(error){
+                return new Response(null, {status: 500})
+            }else{
                 const response = new Response(null, {status: 200})
                 setCookie(response.headers, {
-                    name: token,
+                    name: "token",
                     value: newToken
-                })
+                }) 
                 return response
-            }else{
-                return new Response(null, {status: 500})
             }
         }
     }

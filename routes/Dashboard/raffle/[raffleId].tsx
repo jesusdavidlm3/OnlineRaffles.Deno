@@ -3,8 +3,9 @@ import { supabase } from "../../../libs/supabase.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../../libs/jwt.ts";
 import { getJwtPayload } from "@popov/jwt";
-import PendingPaymentList from "../../../islands/PendingPaymentsList.tsx" 
+import PaymentList from "../../../islands/PaymentsList.tsx" 
 import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
+import ArchiveRaffleButton from "../../../islands/AchiveRaffleButton.tsx";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -56,15 +57,24 @@ export  default function RaffleDashboard(props: PageProps){
                     <h3>Limite de numeros: {raffle.ticketsLimit}</h3>
                     <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
                 </div>
-                {raffle.status === false ? (<h4>Rifa cerrada</h4>):(<DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>)}
+                {raffle.status == 0 &&
+                    <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                }
+                {raffle.status == 1 &&
+                    <ArchiveRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                }
+                {raffle.status == 2 &&
+                    <h4>Rifa Archivada</h4>
+                }
             </div>
             {raffle.status == false ? (<h1>Pagos realizados</h1>):(<h1>Pagos pendientes</h1>)}
             
             <div class="listContainer">
-                <PendingPaymentList
+                <PaymentList
                     raffleId={raffle.id}
                     apiUrl={apiUrl}
                     imageUrl={imageUrl}
+                    raffleStatus={raffle.status}
                 />
             </div>
         </div>

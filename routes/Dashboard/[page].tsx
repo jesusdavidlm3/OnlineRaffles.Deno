@@ -22,7 +22,13 @@ export const handler: Handlers = {
             }else{
                 const payload = getJwtPayload(token)
                 const list = await rafflesListForDashboard(Number(pagination))
-                const response = await ctx.render({list: list, email: payload.email, imageUrl: `${supabaseUrl}/storage/v1/object/public/`})
+                const response = await ctx.render({
+                    page: pagination,
+                    list: list,
+                    email: payload.email,
+                    imageUrl: `${supabaseUrl}/storage/v1/object/public/`,
+                    apiUrl: apiUrl
+                })
                 setCookie(response.headers, {
                     name: "token",
                     value: newToken,
@@ -52,6 +58,11 @@ export default function DashboardPage(props: PageProps){
                         <h1>{item.title}</h1>
                     </a>
                 )}
+            </div>
+            <div class="pagination">
+                { Number(data.page) > 1 && <a href={`${data.apiUrl}/Dashboard/${Number(data.page)-1}`}><button>Anterior</button></a>}
+                <h3>{data.page}</h3>
+                <a href={`${data.apiUrl}/Dashboard/${Number(data.page)+1}`}><button>Siguiente</button></a>
             </div>
         </div>
     )

@@ -16,6 +16,6 @@ export default function DeactivateRaffleButton({raffleId, apiUrl}: IDeactivateRa
     }
 
     return(
-        <button onClick={deactivateRaffle}>Terminar rifa</button>
+        <button onClick={deactivateRaffle}>Cerrar venta</button>
     )
 }

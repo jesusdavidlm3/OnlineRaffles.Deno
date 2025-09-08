@@ -1,15 +1,30 @@
 import { useState, useEffect } from "preact/hooks"
 import { supabase } from "../libs/supabase.ts"
 
-export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
+interface IPaymentList{
+    raffleId: string,
+    apiUrl: string,
+    imageUrl: string,
+    raffleStatus: number
+}
+
+export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}: IPaymentList){
     
     const [currentList, setCurrentList] = useState([])
+    const [page, setPage] = useState<number>(1)
+    const [pendingPayments, setPendingPayments] = useState<boolean>(true)
 
     useEffect(() => {
-        if(currentList.length == 0){
+        if(currentList.length == 0 && pendingPayments === true){
             updateListElements(raffleId)
+        }else if(currentList.length == 0 && pendingPayments === false){
+            getAllElements()
         }
-    }, [currentList])
+    }, [currentList, page])
+
+    useEffect(() => {
+        getAllElements()
+    }, [page])
 
     async function updateListElements(raffleId: string){
         const res = await fetch(`${apiUrl}/api/getPendingPaymentsList`, {
@@ -27,6 +42,22 @@ export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
             const rejectedResponse = await rejectedRes.json()
             if(rejectedResponse.length > 0 ){
                 setCurrentList(rejectedResponse)
+            }else{
+                setPendingPayments(false)
+                getAllElements()
+            }
+        }
+    }
+
+    async function getAllElements(){
+        const res = await fetch(`${apiUrl}/api/getAllRafflePayments`,{
+            method: 'post',
+            body: JSON.stringify({raffleId: raffleId, page: page})
+        })
+        if(res.status == 200){
+            const response = await res.json()
+            if(response.length > 0){
+                setCurrentList(response)
             }
         }
     }
@@ -34,7 +65,7 @@ export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
     async function confirmPayment(ticketId: string){
         const res = await fetch(`${apiUrl}/api/confirmPayment`, {
             method: 'post',
-            body: JSON.stringify({ticketId: ticketId})
+            body: JSON.stringify({ticketId: ticketId, page: page})
         })
         if(res.status == 200){
             setCurrentList(c => c.filter(item => item.id != ticketId))
@@ -44,6 +75,16 @@ export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
     async function rejectPayment(ticketId: string){
         const res = await fetch(`${apiUrl}/api/rejectPayment`, {
             method: 'post',
+            body: JSON.stringify({ticketId: ticketId})
+        })
+        if(res.status == 200){
+            setCurrentList(c => c.filter(item => item.id != ticketId))
+        }
+    }
+
+    async function deletePayment(ticketId: string){
+        const res = await fetch(`${apiUrl}/api/deletePayment`, {
+            method: 'delete',
             body: JSON.stringify({ticketId: ticketId})
         })
         if(res.status == 200){
@@ -64,13 +105,21 @@ export default function PendingPaymentsList({raffleId, apiUrl, imageUrl}){
                         <h4>Telefono: {item.phone}</h4>
                         <h4>Correo: {item.email}</h4>
                     </div>
-                    <div class="buttons">
+                    { item.status != 1 && <div class="buttons">
                         <button onClick={() => confirmPayment(item.id)}>Aceptar</button>
                         <button onClick={() => rejectPayment(item.id)}>Rechazar</button>
+                        {item.status == 2 && <button onClick={() => deletePayment(item.id)}>Eliminar</button>}
                         <a href={`${imageUrl}${item.receipt}`} target="_blank"><button>Ver comprobante</button></a>
-                    </div>
+                    </div>}
                 </div>
-                ))}
+            ))}
+            {(raffleStatus == 2 || pendingPayments === false) && 
+                <div class="pagination">
+                    <button onClick={() => setPage(page-1)} disabled={page == 1}>Anterior</button>
+                    <h3>{page}</h3>
+                    <button onClick={() => setPage(page+1)}>Siguiente</button>
+                </div>
+            }
         </>
     )
 }

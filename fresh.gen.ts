@@ -11,10 +11,13 @@ import * as $Support from "./routes/Support.tsx";
 import * as $Verify from "./routes/Verify.tsx";
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_archiveRaffle from "./routes/api/archiveRaffle.ts";
 import * as $api_buyRandomTicket from "./routes/api/buyRandomTicket.ts";
 import * as $api_buySelectedTickets from "./routes/api/buySelectedTickets.ts";
 import * as $api_confirmPayment from "./routes/api/confirmPayment.ts";
 import * as $api_deactivateRaffle from "./routes/api/deactivateRaffle.ts";
+import * as $api_deletePayment from "./routes/api/deletePayment.ts";
+import * as $api_getAllRafflePayments from "./routes/api/getAllRafflePayments.ts";
 import * as $api_getPendingPaymentsList from "./routes/api/getPendingPaymentsList.ts";
 import * as $api_getRejectedPaymentsList from "./routes/api/getRejectedPaymentsList.ts";
 import * as $api_login from "./routes/api/login.ts";
@@ -24,11 +27,12 @@ import * as $api_verifyTicket from "./routes/api/verifyTicket.ts";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $raffle_raffleId_ from "./routes/raffle/[raffleId].tsx";
+import * as $AchiveRaffleButton from "./islands/AchiveRaffleButton.tsx";
 import * as $Buyer from "./islands/Buyer.tsx";
 import * as $DeactivateRaffleButton from "./islands/DeactivateRaffleButton.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
 import * as $NewRaffle from "./islands/NewRaffle.tsx";
-import * as $PendingPaymentsList from "./islands/PendingPaymentsList.tsx";
+import * as $PaymentsList from "./islands/PaymentsList.tsx";
 import * as $RandomTickets from "./islands/RandomTickets.tsx";
 import * as $TicketsSelector from "./islands/TicketsSelector.tsx";
 import * as $UserAgreementsModal from "./islands/UserAgreementsModal.tsx";
@@ -47,10 +51,13 @@ const manifest = {
     "./routes/Verify.tsx": $Verify,
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/archiveRaffle.ts": $api_archiveRaffle,
     "./routes/api/buyRandomTicket.ts": $api_buyRandomTicket,
     "./routes/api/buySelectedTickets.ts": $api_buySelectedTickets,
     "./routes/api/confirmPayment.ts": $api_confirmPayment,
     "./routes/api/deactivateRaffle.ts": $api_deactivateRaffle,
+    "./routes/api/deletePayment.ts": $api_deletePayment,
+    "./routes/api/getAllRafflePayments.ts": $api_getAllRafflePayments,
     "./routes/api/getPendingPaymentsList.ts": $api_getPendingPaymentsList,
     "./routes/api/getRejectedPaymentsList.ts": $api_getRejectedPaymentsList,
     "./routes/api/login.ts": $api_login,
@@ -62,11 +69,12 @@ const manifest = {
     "./routes/raffle/[raffleId].tsx": $raffle_raffleId_,
   },
   islands: {
+    "./islands/AchiveRaffleButton.tsx": $AchiveRaffleButton,
     "./islands/Buyer.tsx": $Buyer,
     "./islands/DeactivateRaffleButton.tsx": $DeactivateRaffleButton,
     "./islands/NavBar.tsx": $NavBar,
     "./islands/NewRaffle.tsx": $NewRaffle,
-    "./islands/PendingPaymentsList.tsx": $PendingPaymentsList,
+    "./islands/PaymentsList.tsx": $PaymentsList,
     "./islands/RandomTickets.tsx": $RandomTickets,
     "./islands/TicketsSelector.tsx": $TicketsSelector,
     "./islands/UserAgreementsModal.tsx": $UserAgreementsModal,

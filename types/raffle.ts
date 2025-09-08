@@ -1,7 +1,7 @@
 export interface Iraffle{
     id: string,
     title: string,
-    status: boolean,
+    status: number,
     ticketPrice: number,
     description: string,
     ticketsLimit: number,

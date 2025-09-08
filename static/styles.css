@@ -469,3 +469,12 @@ h1{
 .loginPage .loginForm button{
   margin: 20px;
 }
+
+.pagination{
+  display: flex;
+  align-items: center;
+  background-color: var(--componentColor);
+  padding: 25px;
+  border-radius: 15px;
+  gap: 10px;
+}

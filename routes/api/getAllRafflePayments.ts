@@ -1,7 +1,7 @@
-import { Handlers, FreshContext } from "$fresh/server.ts";
+import { Handlers, FreshContext } from "$fresh/server.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
+import { supabase } from "../../libs/supabase.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
-import { supabase } from "../../libs/supabase.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, ctx: FreshContext){
@@ -12,17 +12,21 @@ export const handler: Handlers = {
         if(newToken === false){
             return Response.redirect(`${apiUrl}/`)
         }else{
-            const reqData = await req.json()
-            const {data: data, error} = await supabase.from("raffles").update({status: 1}).eq("id", reqData.raffleId)
+            const requestData = await req.json()
+            const raffleId = requestData.raffleId
+            const end = requestData.page * 10
+            const start = requestData.page === 1 ? 0 : end - 9
+            const {data: list, error} = await supabase.from("tickets").select("*").eq("raffleId", raffleId).range(start, end)
             if(!error){
-                const response = new Response(null, {status: 200})
+                const response = new Response(JSON.stringify(list))
                 setCookie(response.headers, {
-                    name: token,
+                    name: "token",
                     value: newToken
                 })
                 return response
             }else{
-                return new Response(null, {status: 500})
+                console.log(error)
+                return new Response(JSON.stringify(error), {status: 500})
             }
         }
     }

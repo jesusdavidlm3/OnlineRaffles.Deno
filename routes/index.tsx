@@ -9,7 +9,7 @@ const supabaseUrl = Deno.env.get("supabase_url")
 
 export const handler: Handlers = {
   async GET(_req, ctx){
-    const {data: raffleList, error} = await supabase.from("raffles").select("*").is("status", true);
+    const {data: raffleList, error} = await supabase.from("raffles").select("*").or("status.eq.0, status.eq.1");
     if(raffleList != undefined && raffleList.length > 0){
       const props = {...raffleList![0], flyer: `${supabaseUrl}/storage/v1/object/public/${raffleList[0].flyer}`}
       return ctx.render(props);
@@ -38,7 +38,7 @@ export default function Home(props: PageProps) {
       ):(
         <>
           <h1>Actualmente no hay ninguna rifa en funcionamiento</h1>
-          <h3>Vuelve propnto para estar al pendiente</h3>
+          <h3>Vuelve pronto para estar al pendiente</h3>
         </>
       )}
       
