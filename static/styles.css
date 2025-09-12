@@ -478,3 +478,25 @@ h1{
   border-radius: 15px;
   gap: 10px;
 }
+
+.SoldBar{
+  background-color: var(--elementColor);
+  height: 40px;
+  width: 70vw;
+  border-radius: 30px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+
+.SoldBar .SoldArea{
+  background-color: var(--componentColor);
+  height: 40px;
+}
+
+.SoldBar h4{
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  margin: 0;
+}
