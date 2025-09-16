@@ -1,8 +1,6 @@
 import NavBar from "../../islands/NavBar.tsx"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import { supabase } from "../../libs/supabase.ts";
 import Buyer from "../../islands/Buyer.tsx"
-import { Iraffle } from "../../types/raffle.ts";
 import Footer from "../../components/Footer.tsx";
 import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 import SoldBar from "../../components/SoldBar.tsx";

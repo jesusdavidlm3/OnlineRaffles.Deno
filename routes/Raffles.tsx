@@ -1,20 +1,24 @@
-import { supabase } from "../libs/supabase.ts";
 import NavBar from "../islands/NavBar.tsx";
+import getActiveRafflesList from "../functions/getActiveRafflesList.ts"
+import { Handlers, FreshContext, PageProps } from "$fresh/server.ts";
 
-export default async function Raffles(){
+export const handler: Handlers = {
+    async GET(req: Request, ctx: FreshContext){
+        const list = await getActiveRafflesList()
+        return ctx.render(list)
+    }
+}
 
-    const {data: raffles, error} = await supabase
-    .from('raffles')
-    .select('*')
-    .is("status", true)
-    console.log(raffles)
+export default function Raffles(props: PageProps){
+
+    const list = props.data
 
     return(<>
         <NavBar/>
         <div class="PageBasis">
             <h1>Rifas activas</h1>
             <div class="listContainer">
-                {raffles?.map(item => <a href={`/raffle/${item.id}`} class="listItem">
+                {list?.map(item => <a href={`/raffle/${item.id}`} class="listItem">
                     {item.title}
                 </a>)}
             </div>

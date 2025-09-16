@@ -1,11 +1,11 @@
 import { Handlers, FreshContext, PageProps } from "$fresh/server.ts";
-import { supabase } from "../../libs/supabase.ts";
+import getNumbersForATicket from "../../functions/getNumbersForATicket.ts"
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
         const ticketId = ctx.params.ticketId
-        const {data: ticket, error} = await supabase.from("tickets").select("numbers").eq("id", ticketId)
-        return ctx.render(ticket[0])
+        const numbers = await getNumbersForATicket(ticketId)
+        return ctx.render(numbers)
     }
 }
 

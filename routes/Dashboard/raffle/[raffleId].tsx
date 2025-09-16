@@ -1,11 +1,11 @@
 import { Handlers, FreshContext, PageProps } from "$fresh/server.ts";
-import { supabase } from "../../../libs/supabase.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../../libs/jwt.ts";
 import { getJwtPayload } from "@popov/jwt";
 import PaymentList from "../../../islands/PaymentsList.tsx" 
 import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
 import ArchiveRaffleButton from "../../../islands/AchiveRaffleButton.tsx";
+import getRaffleInfo from "../../../functions/getRaffleInfo.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -19,7 +19,7 @@ export const handler: Handlers = {
             const raffleId = ctx.params.raffleId
             const payload = getJwtPayload(token)
             const supabaseUrl = Deno.env.get("supabase_url")
-            const {data: raffleInfo} = await supabase.from("raffles").select("*").eq("id", raffleId)
+            const raffleInfo = await getRaffleInfo(raffleId)
             const response = await ctx.render({
                 raffle: raffleInfo[0],
                 email: payload.email,
@@ -71,7 +71,7 @@ export  default function RaffleDashboard(props: PageProps){
             
             <div class="listContainer">
                 <PaymentList
-                    raffleId={raffle.id}
+                    raffleId={raffle.thisRaffleId}
                     apiUrl={apiUrl}
                     imageUrl={imageUrl}
                     raffleStatus={raffle.status}
