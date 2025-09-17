@@ -250,6 +250,18 @@ h1{
   gap: 15px;
 }
 
+.TicketsSelector .numbersContainer{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  justify-content: center;
+}
+
+.TicketsSelector .numbersContainer button{
+  width: 15%;
+}
+
 .SupportLink{
   display: flex;
   flex-direction: column;
