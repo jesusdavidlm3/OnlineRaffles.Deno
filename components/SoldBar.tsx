@@ -5,7 +5,7 @@ interface ISoldBar{
 
 export default function SoldBar({sold, total}: ISoldBar){
 
-    const percentage = Number((sold.length / total) * 100).toFixed(2)
+    const percentage = sold != null ? Number((sold.length / total) * 100).toFixed(2) : 0
 
     return(
         <div class="SoldBar">

@@ -46,8 +46,10 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
                     raffleId={raffleId}
                     ticketPrice={ticketPrice}
                     changeMethod={() => setSelectionMethod(1)}
-                    soldNumbers={soldNumbers}
-                    ticketsLimit={ticketsLimit }
+                    soldNumbers={soldNumbers ? soldNumbers:[]}
+                    ticketsLimit={ticketsLimit}
+                    minBuy={minBuy}
+                    apiUrl={apiUrl}
                 />
             }
 
