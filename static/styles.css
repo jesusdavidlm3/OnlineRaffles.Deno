@@ -247,8 +247,12 @@ h1{
   width: calc(85vw - 20px);
   padding: 20px;
   border-radius: 10px;
-  gap: 15px;
+  text-align: center;
 }
+
+/* .TicketsSelector h3{
+  margin: 0;
+} */
 
 .TicketsSelector .numbersContainer{
   display: flex;
@@ -260,6 +264,14 @@ h1{
 
 .TicketsSelector .numbersContainer button{
   width: 15%;
+}
+
+.TicketsSelector .numbersContainer .sold{
+  background-color: gray;
+}
+
+.TicketsSelector .numbersContainer .selected{
+  background-color: aquamarine;
 }
 
 .SupportLink{

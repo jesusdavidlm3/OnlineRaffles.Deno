@@ -13,6 +13,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
     
     const [page, setPage] = useState<number>(1)
     const [pageContent, setPageContent] = useState<number[]>([])
+    const [selectedNumbers, setSelectedNumbers] = useState<number[]>([])
     const newContent: number[] = []
 
     function updatePageContent(){
@@ -24,20 +25,23 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
 
     useEffect(() => {
         updatePageContent()
-    }, [page])
+    }, [page, selectedNumbers])
 
     return(
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
             <button onClick={changeMethod}>Numeros al azar</button>
-            <h3>Numeros disponibles</h3>
-
+            <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
             <div class="numbersContainer">
                 {pageContent.map(item => {
-                    if(item <= ticketsLimit){
-                        return <button>{item}</button>
+                    if(!(item <= ticketsLimit)){
+                        return 
+                    }else if (selectedNumbers.includes(item)){
+                        return <button class="selected" onClick={() => setSelectedNumbers(selectedNumbers.filter(s => s!=item))}>{item}</button>
+                    }else if(soldNumbers.includes(item)){
+                        return <button class="sold">{item}</button>
                     }else{
-                        return
+                        return <button onClick={() => setSelectedNumbers([...selectedNumbers, item])}>{item}</button>
                     }
                 })}
             </div>
