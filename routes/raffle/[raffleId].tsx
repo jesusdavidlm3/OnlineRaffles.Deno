@@ -12,7 +12,7 @@ export const handler: Handlers = {
     async GET(_req, ctx){
         const raffleId = ctx.params.raffleId
         const data = await getRaffleInfo(raffleId)
-        return ctx.render({...data![0], flyer: `${supabaseUrl}/storage/v1/object/public/${data[0].flyer}`});
+        return ctx.render({...data!, flyer: `${supabaseUrl}/storage/v1/object/public/${data.flyer}`});
     }
 }
 

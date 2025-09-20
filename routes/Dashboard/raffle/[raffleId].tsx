@@ -21,7 +21,7 @@ export const handler: Handlers = {
             const supabaseUrl = Deno.env.get("supabase_url")
             const raffleInfo = await getRaffleInfo(raffleId)
             const response = await ctx.render({
-                raffle: raffleInfo[0],
+                raffle: raffleInfo,
                 email: payload.email,
                 imageUrl: `${supabaseUrl}/storage/v1/object/public/`,
                 apiUrl: apiUrl

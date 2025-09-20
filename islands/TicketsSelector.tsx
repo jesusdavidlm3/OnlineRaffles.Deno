@@ -43,7 +43,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
         const formData = new FormData(form)
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("raffleId", raffleId.toString())
-        const fileInput = document.getElementById("fileInput")
+        const fileInput = document.getElementById("fileInput") as HTMLInputElement
         formData.append("receiptFile", fileInput!.files[0])
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("numbers", selectedNumbers.toString())
@@ -65,7 +65,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
     return(
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
-            <button onClick={changeMethod}>Numeros al azar</button>
+            <button type="button" onClick={changeMethod}>Numeros al azar</button>
             <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
             <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
             <div class="numbersContainer">
@@ -73,19 +73,19 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
                     if(!(item <= ticketsLimit)){
                         return 
                     }else if (selectedNumbers.includes(item)){
-                        return <button class="selected" onClick={() => setSelectedNumbers(selectedNumbers.filter(s => s!=item))}>{item}</button>
+                        return <button key={item} type="button" class="selected" onClick={() => setSelectedNumbers(selectedNumbers.filter(s => s!=item))}>{item}</button>
                     }else if(soldNumbers.includes(item)){
-                        return <button class="sold">{item}</button>
+                        return <button key={item} type="button" class="sold">{item}</button>
                     }else{
-                        return <button onClick={() => setSelectedNumbers([...selectedNumbers, item])}>{item}</button>
+                        return <button key={item} type="button" onClick={() => setSelectedNumbers([...selectedNumbers, item])}>{item}</button>
                     }
                 })}
             </div>
 
             <div class="pagination">
-                <button onClick={() => setPage(page-1)} disabled={page <= 1}>anterior</button>
+                <button type="button" onClick={() => setPage(page-1)} disabled={page <= 1}>anterior</button>
                 {`${(page*100)-99} - ${page*100}`}
-                <button onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>siguiente</button>
+                <button type="button" onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>siguiente</button>
             </div>
 
             <form onSubmit={handleSubmit}>
