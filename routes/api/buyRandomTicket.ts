@@ -27,6 +27,7 @@ export const handler: Handlers = {
         const dolarPrice = Number(formData.get("dolarPrice")?.toString())
         const receipt = formData.get("receiptFile") as File
         const receiptRes = await uploadReceipt(receipt)
+        const reference = formData.get("reference")?.toString()
 
         const raffleData = await getRaffleInfo(raffleId!)
 
@@ -49,7 +50,8 @@ export const handler: Handlers = {
             email: email!,
             numbers: numbersToSell!,
             dolarPrice: dolarPrice!,
-            receipt: receiptRes?.fullPath!
+            receipt: receiptRes?.fullPath!,
+            reference: reference!
         }
 
         const response = await buyTickets(data)

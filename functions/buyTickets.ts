@@ -9,7 +9,8 @@ interface IbuyTickets{
     email: string,
     numbers: number[],
     dolarPrice: number,
-    receipt: string
+    receipt: string,
+    reference: string
 }
 
 export default async function buyTickets(ticketInfo: IbuyTickets){
@@ -22,7 +23,8 @@ export default async function buyTickets(ticketInfo: IbuyTickets){
         email: ticketInfo.email,
         numbers: ticketInfo.numbers,
         dolarPrice: ticketInfo.dolarPrice,
-        receipt: ticketInfo.receipt
+        receipt: ticketInfo.receipt,
+        reference: ticketInfo.reference
     }]).select()
     if(!error){
         return true

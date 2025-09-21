@@ -70,9 +70,10 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
         <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
         <form onSubmit={handleSubmit}>
             <input name="name" placeholder="Nombre:" required disabled={loading}/>
-            <input name="identification" placeholder="Cedula:" required disabled={loading}/>
-            <input name="phone" placeholder="Telefono:" required disabled={loading} type="phone"/>
+            <input name="identification" placeholder="Cedula:" required disabled={loading} type="number"/>
+            <input name="phone" placeholder="Telefono:" required disabled={loading} type="number"/>
             <input name="email" placeholder="Correo: " required disabled={loading} type="email"/>
+            <input name="reference" placeholder="Referencia de pago: " required disabled={loading} type="number"/>
             <label style={{alignSelf: 'start', marginLeft: '15px'}}>Comprobante de pago:</label>
             <input name="receipts" type="file" accept="image/*, .pdf" id="fileInput" required disabled={loading}/>
             <button type="submit" disabled={loading}>{loading ? "Cargando":"Comprar"}</button>

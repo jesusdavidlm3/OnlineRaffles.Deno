@@ -83,16 +83,17 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
             </div>
 
             <div class="pagination">
-                <button type="button" onClick={() => setPage(page-1)} disabled={page <= 1}>anterior</button>
+                <button type="button" onClick={() => setPage(page-1)} disabled={page <= 1}>{page == 1 ? 0 : `${((page-1)*100)-99} - ${(page-1)*100}`}</button>
                 {`${(page*100)-99} - ${page*100}`}
-                <button type="button" onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>siguiente</button>
+                <button type="button" onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>{`${((page+1)*100)-99} - ${(page+1)*100}`}</button>
             </div>
 
             <form onSubmit={handleSubmit}>
                 <input name="name" placeholder="Nombre:" required disabled={loading}/>
-                <input name="identification" placeholder="Cedula:" required disabled={loading}/>
-                <input name="phone" placeholder="Telefono:" required disabled={loading} type="phone"/>
+                <input name="identification" placeholder="Cedula:" required disabled={loading} type="number" min="1" max="200000000"/>
+                <input name="phone" placeholder="Telefono:" required disabled={loading} type="number"/>
                 <input name="email" placeholder="Correo: " required disabled={loading} type="email"/>
+                <input name="reference" placeholder="Referencia de pago: " required disabled={loading} type="number"/>
                 <label style={{alignSelf: 'start', marginLeft: '15px'}}>Comprobante de pago:</label>
                 <input name="receipts" type="file" accept="image/*, .pdf" id="fileInput" required disabled={loading}/>
                 { selectedNumbers.length >= minBuy ? (

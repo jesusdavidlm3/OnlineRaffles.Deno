@@ -57,12 +57,17 @@ button:hover{
   cursor: pointer;
 }
 
-input{
+input, textarea{
   background-color: #778da9;
   border: 3px solid #1b263b;
   border-radius: 10px;
   width: 90%;
   height: 30px;
+}
+
+textarea{
+  height: 300px;
+  resize: vertical;
 }
 
 input::placeholder{
