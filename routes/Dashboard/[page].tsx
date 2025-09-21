@@ -3,6 +3,7 @@ import rafflesListForDashboard from "../../functions/rafflesListForDashboard.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
 import { getJwtPayload } from "@popov/jwt";
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
+import { Ipayload } from "../../types/JWTpayload.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -20,7 +21,7 @@ export const handler: Handlers = {
             if(newToken === false){
                 return Response.redirect(`${apiUrl}/`)
             }else{
-                const payload = getJwtPayload(token)
+                const payload = getJwtPayload(token) as Ipayload
                 const list = await rafflesListForDashboard(Number(pagination))
                 const response = await ctx.render({
                     page: pagination,
@@ -47,22 +48,22 @@ export default function DashboardPage(props: PageProps){
             <div class="dashboardNavBar">
                 <h4>{data.email}</h4>
                 <div class="buttons">
-                    <a href="/Dashboard/raffle/New"><button>Nueva rifa</button></a>
-                    <button>Salir</button>
+                    <a href="/Dashboard/raffle/New"><button type="button">Nueva rifa</button></a>
+                    <button type="button">Salir</button>
                 </div>
             </div>
             <div class="listContainer">
                 {data.list.map(item => 
-                    <a href={`/Dashboard/raffle/${item.id}`} class="listItem listItemMainDashboard">
+                    <a key={item} href={`/Dashboard/raffle/${item.id}`} class="listItem listItemMainDashboard">
                         <img src={`${data.imageUrl}${item.flyer}`}/>
                         <h1>{item.title}</h1>
                     </a>
                 )}
             </div>
             <div class="pagination">
-                { Number(data.page) > 1 && <a href={`${data.apiUrl}/Dashboard/${Number(data.page)-1}`}><button>Anterior</button></a>}
+                { Number(data.page) > 1 && <a href={`${data.apiUrl}/Dashboard/${Number(data.page)-1}`}><button type="button">Anterior</button></a>}
                 <h3>{data.page}</h3>
-                <a href={`${data.apiUrl}/Dashboard/${Number(data.page)+1}`}><button>Siguiente</button></a>
+                <a href={`${data.apiUrl}/Dashboard/${Number(data.page)+1}`}><button type="button">Siguiente</button></a>
             </div>
         </div>
     )

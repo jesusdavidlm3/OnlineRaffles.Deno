@@ -4,7 +4,7 @@ import loginOnSupabase from "../../functions/loginOnSupabase.ts"
 import { createToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const formData = await req.formData()
         const email = formData.get("email")!.toString()
         const password = formData.get("password")!.toString()

@@ -1,6 +1,6 @@
 import { encrypt } from "../libs/hash.ts"
 
-export default function LoginForm({apiUrl}){
+export default function LoginForm({apiUrl}: {apiUrl: string}){
 
     async function login(e: Event){
         e.preventDefault()

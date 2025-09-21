@@ -1,10 +1,10 @@
-export default function NewRaffle({apiUrl}){
+export default function NewRaffle({apiUrl}: {apiUrl: string}){
 
     async function submitForm(e: Event){
         e.preventDefault()
         const form = e.target as HTMLFormElement
         const formData = new FormData(form)
-        const flyerInput = document.getElementById("flyer")
+        const flyerInput = document.getElementById("flyer") as HTMLInputElement
         formData.append("flyerFile", flyerInput.files[0])
 
         const res = await fetch(`${apiUrl}/api/newRaffle`, {

@@ -1,10 +1,10 @@
 import { Handlers, FreshContext } from "$fresh/server.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
-import { supabase } from "../../libs/supabase.ts";
+import deactivateRaffles from "../../functions/deactivateRaffles.ts"
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const apiUrl = Deno.env.get("front_url")
         const cookies = getCookies(req.headers)
         const token = cookies.token
@@ -13,8 +13,8 @@ export const handler: Handlers = {
             return Response.redirect(`${apiUrl}/`)
         }else{
             const reqData = await req.json()
-            const {data: data, error} = await supabase.from("raffles").update({status: 1}).eq("id", reqData.raffleId)
-            if(!error){
+            const response = await deactivateRaffles(reqData.raffleId)
+            if(response === true){
                 const response = new Response(null, {status: 200})
                 setCookie(response.headers, {
                     name: token,

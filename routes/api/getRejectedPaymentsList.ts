@@ -4,7 +4,7 @@ import { supabase } from "../../libs/supabase.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const apiUrl = Deno.env.get("front_url")
         const cookies = getCookies(req.headers)
         const token = cookies.token

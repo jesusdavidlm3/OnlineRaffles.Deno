@@ -3,6 +3,7 @@ import { getCookies, setCookie } from "@std/http/cookie";
 import { getJwtPayload } from "@popov/jwt";
 import { verifyAndRenewToken } from "../../../libs/jwt.ts"; 
 import NewRaffle from "../../../islands/NewRaffle.tsx";
+import { Ipayload } from "../../../types/JWTpayload.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -13,7 +14,7 @@ export const handler: Handlers = {
         if(newToken === false){
             return Response.redirect(`${apiUrl}/`)
         }else{
-            const payload = getJwtPayload(token)
+            const payload = getJwtPayload(token) as Ipayload
             const response = await ctx.render({email: payload.email, apiUrl: apiUrl})
             setCookie(response.headers, {
                 name: "token",
@@ -32,8 +33,8 @@ export default function New(props: PageProps){
             <div class="dashboardNavBar">
                 <h4>{data.email}</h4>
                 <div class="buttons">
-                    <button>Atras</button>
-                    <button>Salir</button>
+                    <button type="button">Atras</button>
+                    <button type="button">Salir</button>
                 </div>
             </div>
             <h1>Crear nueva rifa</h1>

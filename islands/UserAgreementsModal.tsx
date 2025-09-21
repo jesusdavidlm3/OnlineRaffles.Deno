@@ -14,7 +14,7 @@ export default function UserAgreeModal(){
                 <p>Condicion 2</p>
                 <p>Condicion 3</p>
                 <p>Condicion 4</p>
-                <button onClick={() => {setBackDropVisibility("blendOut"); setModalVisibility("reduce")}}>Cerrar</button>
+                <button type="button" onClick={() => {setBackDropVisibility("blendOut"); setModalVisibility("reduce")}}>Cerrar</button>
             </div>
         </div>
     )

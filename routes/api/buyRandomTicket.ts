@@ -15,7 +15,7 @@ interface Idata{
 }
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const uuid = crypto.randomUUID()
         const formData = await req.formData()
         const name = formData.get("name")?.toString()
@@ -30,7 +30,7 @@ export const handler: Handlers = {
 
         const raffleData = await getRaffleInfo(raffleId!)
 
-        const soldNumbers = raffleData.soldtickets
+        const soldNumbers = raffleData.soldtickets ? raffleData.soldtickets : []
         const numbersToSell: number[] = []
 
         while(numbersToSell.length < ticketsQuantity){

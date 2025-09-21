@@ -6,6 +6,7 @@ import PaymentList from "../../../islands/PaymentsList.tsx"
 import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
 import ArchiveRaffleButton from "../../../islands/AchiveRaffleButton.tsx";
 import getRaffleInfo from "../../../functions/getRaffleInfo.ts";
+import { Ipayload } from "../../../types/JWTpayload.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -17,7 +18,7 @@ export const handler: Handlers = {
             return Response.redirect(`${apiUrl}/`)
         }else{
             const raffleId = ctx.params.raffleId
-            const payload = getJwtPayload(token)
+            const payload = getJwtPayload(token) as Ipayload
             const supabaseUrl = Deno.env.get("supabase_url")
             const raffleInfo = await getRaffleInfo(raffleId)
             const response = await ctx.render({
@@ -46,7 +47,7 @@ export  default function RaffleDashboard(props: PageProps){
             <div class="dashboardNavBar">
                 <h4>{email}</h4>
                 <div class="buttons">
-                    <button>Salir</button>
+                    <button type="button">Salir</button>
                 </div>
             </div>
             <div class="dashboardRaffleTile">
@@ -58,10 +59,10 @@ export  default function RaffleDashboard(props: PageProps){
                     <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
                 </div>
                 {raffle.status == 0 &&
-                    <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                    <DeactivateRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 1 &&
-                    <ArchiveRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                    <ArchiveRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 2 &&
                     <h4>Rifa Archivada</h4>
