@@ -8,16 +8,15 @@ interface Ibuyer{
     raffleId: string,
     apiUrl: string,
     minBuy: number,
-    raffleStatus: number
+    raffleStatus: number,
+    soldNumbers: number[],
+    ticketsLimit: number
 }
 
-export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffleStatus}: Ibuyer){
-
-    // const dolarRaw = await fetch('https://ve.dolarapi.com/v1/dolares/oficial')
-    // const dolar = await dolarRaw.json()
+export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffleStatus, soldNumbers, ticketsLimit}: Ibuyer){
 
     const [dolarPrice, setDolarPrice] = useState<number>()
-    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(1)
+    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(2)
 
     fetch('https://ve.dolarapi.com/v1/dolares/oficial')
     .then(async data => {
@@ -47,6 +46,10 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
                     raffleId={raffleId}
                     ticketPrice={ticketPrice}
                     changeMethod={() => setSelectionMethod(1)}
+                    soldNumbers={soldNumbers ? soldNumbers:[]}
+                    ticketsLimit={ticketsLimit}
+                    minBuy={minBuy}
+                    apiUrl={apiUrl}
                 />
             }
 

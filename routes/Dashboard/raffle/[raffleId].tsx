@@ -1,11 +1,12 @@
 import { Handlers, FreshContext, PageProps } from "$fresh/server.ts";
-import { supabase } from "../../../libs/supabase.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../../libs/jwt.ts";
 import { getJwtPayload } from "@popov/jwt";
 import PaymentList from "../../../islands/PaymentsList.tsx" 
 import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
 import ArchiveRaffleButton from "../../../islands/AchiveRaffleButton.tsx";
+import getRaffleInfo from "../../../functions/getRaffleInfo.ts";
+import { Ipayload } from "../../../types/JWTpayload.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -17,11 +18,11 @@ export const handler: Handlers = {
             return Response.redirect(`${apiUrl}/`)
         }else{
             const raffleId = ctx.params.raffleId
-            const payload = getJwtPayload(token)
+            const payload = getJwtPayload(token) as Ipayload
             const supabaseUrl = Deno.env.get("supabase_url")
-            const {data: raffleInfo} = await supabase.from("raffles").select("*").eq("id", raffleId)
+            const raffleInfo = await getRaffleInfo(raffleId)
             const response = await ctx.render({
-                raffle: raffleInfo[0],
+                raffle: raffleInfo,
                 email: payload.email,
                 imageUrl: `${supabaseUrl}/storage/v1/object/public/`,
                 apiUrl: apiUrl
@@ -46,7 +47,7 @@ export  default function RaffleDashboard(props: PageProps){
             <div class="dashboardNavBar">
                 <h4>{email}</h4>
                 <div class="buttons">
-                    <button>Salir</button>
+                    <button type="button">Salir</button>
                 </div>
             </div>
             <div class="dashboardRaffleTile">
@@ -58,10 +59,10 @@ export  default function RaffleDashboard(props: PageProps){
                     <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
                 </div>
                 {raffle.status == 0 &&
-                    <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                    <DeactivateRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 1 &&
-                    <ArchiveRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
+                    <ArchiveRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 2 &&
                     <h4>Rifa Archivada</h4>
@@ -71,7 +72,7 @@ export  default function RaffleDashboard(props: PageProps){
             
             <div class="listContainer">
                 <PaymentList
-                    raffleId={raffle.id}
+                    raffleId={raffle.thisRaffleId}
                     apiUrl={apiUrl}
                     imageUrl={imageUrl}
                     raffleStatus={raffle.status}

@@ -1,19 +1,34 @@
 import { useState, useEffect } from "preact/hooks"
-import { supabase } from "../libs/supabase.ts"
 
-interface IPaymentList{
+interface IpaymentList{
     raffleId: string,
     apiUrl: string,
     imageUrl: string,
     raffleStatus: number
 }
 
-export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}: IPaymentList){
+interface Ipayment{
+    id: string,
+    name: string,
+    identification: string,
+    dolarPrice: number,
+    numbers: number[],
+    phone: string, 
+    email: string,
+    status: number,
+    receipt: string
+}
+
+// Primero se piden 10 pagos pendientes, al agotar la lista se piden 10 mas. los pendientes tienen prioridad
+// Despues de agotar los pendientes se pediran los rechazados para comunicarse y confirmar o liberar los numeros
+// si la rifa esta cerrada pero no archivada se visualizaran todos los pagos con paginacion al no haber pagos pendientes.
+
+export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}: IpaymentList){
     
     const [currentList, setCurrentList] = useState([])
     const [page, setPage] = useState<number>(1)
-    const [pendingPayments, setPendingPayments] = useState<boolean>(true)
-
+    const [pendingPayments, setPendingPayments] = useState<boolean>(true)   //Si no hay pagos pendientes se traen los
+                                                                            //pagos rechazados
     useEffect(() => {
         if(currentList.length == 0 && pendingPayments === true){
             updateListElements(raffleId)
@@ -23,7 +38,9 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
     }, [currentList, page])
 
     useEffect(() => {
-        getAllElements()
+        if(pendingPayments === false){
+            getAllElements()
+        }
     }, [page])
 
     async function updateListElements(raffleId: string){
@@ -68,7 +85,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
             body: JSON.stringify({ticketId: ticketId, page: page})
         })
         if(res.status == 200){
-            setCurrentList(c => c.filter(item => item.id != ticketId))
+            setCurrentList(c => c.filter((item: Ipayment) => item.id != ticketId))
         }
     }
 
@@ -78,7 +95,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
             body: JSON.stringify({ticketId: ticketId})
         })
         if(res.status == 200){
-            setCurrentList(c => c.filter(item => item.id != ticketId))
+            setCurrentList(c => c.filter((item: Ipayment) => item.id != ticketId))
         }
     }
 
@@ -88,13 +105,13 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
             body: JSON.stringify({ticketId: ticketId})
         })
         if(res.status == 200){
-            setCurrentList(c => c.filter(item => item.id != ticketId))
+            setCurrentList(c => c.filter((item: Ipayment) => item.id != ticketId))
         }
     }
 
     return(
         <>
-            {currentList.map(item => (
+            {currentList.map((item: Ipayment) => (
                     <div class="listItem">
                     <div class="info">
                         <h4>Nombre: {item.name}</h4>
@@ -106,18 +123,18 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                         <h4>Correo: {item.email}</h4>
                     </div>
                     { item.status != 1 && <div class="buttons">
-                        <button onClick={() => confirmPayment(item.id)}>Aceptar</button>
-                        <button onClick={() => rejectPayment(item.id)}>Rechazar</button>
-                        {item.status == 2 && <button onClick={() => deletePayment(item.id)}>Eliminar</button>}
-                        <a href={`${imageUrl}${item.receipt}`} target="_blank"><button>Ver comprobante</button></a>
+                        <button type="button" onClick={() => confirmPayment(item.id)}>Aceptar</button>
+                        <button type="button" onClick={() => rejectPayment(item.id)}>Rechazar</button>
+                        {item.status == 2 && <button type="button" onClick={() => deletePayment(item.id)}>Eliminar</button>}
+                        <a href={`${imageUrl}${item.receipt}`} target="_blank"><button type="button">Ver comprobante</button></a>
                     </div>}
                 </div>
             ))}
             {(raffleStatus == 2 || pendingPayments === false) && 
                 <div class="pagination">
-                    <button onClick={() => setPage(page-1)} disabled={page == 1}>Anterior</button>
+                    <button type="button" onClick={() => setPage(page-1)} disabled={page == 1}>Anterior</button>
                     <h3>{page}</h3>
-                    <button onClick={() => setPage(page+1)}>Siguiente</button>
+                    <button type="button" onClick={() => setPage(page+1)}>Siguiente</button>
                 </div>
             }
         </>

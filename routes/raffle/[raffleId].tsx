@@ -1,9 +1,9 @@
 import NavBar from "../../islands/NavBar.tsx"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import { supabase } from "../../libs/supabase.ts";
 import Buyer from "../../islands/Buyer.tsx"
-import { Iraffle } from "../../types/raffle.ts";
-import Footer from "../../components/Footer.tsx"
+import Footer from "../../components/Footer.tsx";
+import getRaffleInfo from "../../functions/getRaffleInfo.ts"
+import SoldBar from "../../components/SoldBar.tsx";
 
 const supabaseUrl = Deno.env.get("supabase_url")
 const apiUrl = Deno.env.get("front_url")
@@ -11,14 +11,14 @@ const apiUrl = Deno.env.get("front_url")
 export const handler: Handlers = {
     async GET(_req, ctx){
         const raffleId = ctx.params.raffleId
-        const {data: rafflesList, error} = await supabase.from("raffles").select("*").eq("id", raffleId)
-        return ctx.render({...rafflesList![0], flyer: `${supabaseUrl}/storage/v1/object/public/${rafflesList[0].flyer}`});
+        const data = await getRaffleInfo(raffleId)
+        return ctx.render({...data!, flyer: `${supabaseUrl}/storage/v1/object/public/${data.flyer}`});
     }
 }
 
 export default function raffle(props: PageProps){
 
-    const currentRaffle: Iraffle = props.data
+    const currentRaffle = props.data
 
     return(<>
         <NavBar/>
@@ -26,12 +26,15 @@ export default function raffle(props: PageProps){
             <h1>{currentRaffle.title}</h1>
             <img src={currentRaffle.flyer} class="flyer" draggable={false}/>
             <p style={{whiteSpace: 'pre-line'}}>{currentRaffle.description}</p>
+            <SoldBar sold={currentRaffle.soldtickets} total={currentRaffle.ticketsLimit}/>
             <Buyer
                 ticketPrice={currentRaffle.ticketPrice}
-                raffleId={currentRaffle.id}
+                raffleId={currentRaffle.thisRaffleId}
                 apiUrl={apiUrl!}
                 minBuy={currentRaffle.minBuy}
                 raffleStatus={currentRaffle.status}
+                soldNumbers={currentRaffle.soldtickets}
+                ticketsLimit={currentRaffle.ticketsLimit}
             />
             <Footer/>
         </div>

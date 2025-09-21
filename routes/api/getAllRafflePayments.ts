@@ -1,10 +1,10 @@
 import { Handlers, FreshContext } from "$fresh/server.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
-import { supabase } from "../../libs/supabase.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
+import getAllRafflePayments from "../../functions/getAllRafflePayments.ts"
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const apiUrl = Deno.env.get("front_url")
         const cookies = getCookies(req.headers)
         const token = cookies.token
@@ -16,8 +16,8 @@ export const handler: Handlers = {
             const raffleId = requestData.raffleId
             const end = requestData.page * 10
             const start = requestData.page === 1 ? 0 : end - 9
-            const {data: list, error} = await supabase.from("tickets").select("*").eq("raffleId", raffleId).range(start, end)
-            if(!error){
+            const list = await getAllRafflePayments({raffleId, start, end})
+            if(list){
                 const response = new Response(JSON.stringify(list))
                 setCookie(response.headers, {
                     name: "token",
@@ -25,8 +25,7 @@ export const handler: Handlers = {
                 })
                 return response
             }else{
-                console.log(error)
-                return new Response(JSON.stringify(error), {status: 500})
+                return new Response(null, {status: 500})
             }
         }
     }

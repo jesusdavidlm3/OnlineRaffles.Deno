@@ -16,6 +16,6 @@ export default function ArchiveRaffleButton({raffleId, apiUrl}: IArchiveRaffleBu
     }
 
     return(
-        <button onClick={archiveRaffle}>Archivar rifa</button>
+        <button type="button" onClick={archiveRaffle}>Archivar rifa</button>
     )
 }

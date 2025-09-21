@@ -1,7 +1,8 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-import { supabase } from "../../libs/supabase.ts";
 import uploadReceipt from "../../functions/uploadReceipt.ts"
 import { crypto } from "@std/crypto/crypto";
+import buyTickets from "../../functions/buyTickets.ts"
+import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 
 interface Idata{
     name: string,
@@ -14,7 +15,7 @@ interface Idata{
 }
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const uuid = crypto.randomUUID()
         const formData = await req.formData()
         const name = formData.get("name")?.toString()
@@ -24,43 +25,40 @@ export const handler: Handlers = {
         const raffleId = formData.get("raffleId")?.toString()
         const ticketsQuantity = Number(formData.get("ticketsQuantity")?.toString())
         const dolarPrice = Number(formData.get("dolarPrice")?.toString())
-
         const receipt = formData.get("receiptFile") as File
-
         const receiptRes = await uploadReceipt(receipt)
+        const reference = formData.get("reference")?.toString()
 
-        const soldNumbers: number[] = []
+        const raffleData = await getRaffleInfo(raffleId!)
+
+        const soldNumbers = raffleData.soldtickets ? raffleData.soldtickets : []
         const numbersToSell: number[] = []
-        
-        const {data: raffleInfo} = await supabase.from("raffles").select("ticketsLimit").eq("id", raffleId)
-        const {data: rawNumbers} = await supabase.from("tickets").select("numbers").eq("raffleId", raffleId)
 
-        rawNumbers?.forEach(dbItem => {
-            dbItem.numbers.forEach(numbersCollection => {
-                soldNumbers.push(numbersCollection)
-            });
-        })
-
-        for(let i = 1; numbersToSell.length < ticketsQuantity; i++){
-            if(!soldNumbers.includes(i)){
-                numbersToSell.push(i)
+        while(numbersToSell.length < ticketsQuantity){
+            const posibleNumber = Math.floor(Math.random() * ((raffleData.ticketsLimit+1) - 1) + 0)
+            if(!soldNumbers.includes(posibleNumber)){
+                numbersToSell.push(posibleNumber)
             }
         }
 
-        const {data, error} = await supabase.from("tickets").insert([{
-            id: uuid,
-            name: name,
-            identification: identification,
-            raffleId: raffleId,
-            phone: phone,
-            email: email,
-            numbers: numbersToSell,
-            dolarPrice: dolarPrice,
-            receipt: receiptRes?.fullPath
-        }]).select()
+        const data = {
+            id: uuid!,
+            name: name!,
+            identification: identification!,
+            raffleId: raffleId!,
+            phone: phone!,
+            email: email!,
+            numbers: numbersToSell!,
+            dolarPrice: dolarPrice!,
+            receipt: receiptRes?.fullPath!,
+            reference: reference!
+        }
 
-        console.log(error)
-
-        return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
+        const response = await buyTickets(data)
+        if(response === true){
+            return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
+        }else{
+            return new Response(null, {status: 500})
+        }
     }
 }

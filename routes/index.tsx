@@ -1,20 +1,20 @@
 import UserAgreementsModal from "../islands/UserAgreementsModal.tsx"
 import NavBar from "../islands/NavBar.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { supabase } from "../libs/supabase.ts";
 import { Iraffle } from "../types/raffle.ts";
 import Footer from "../components/Footer.tsx"
+import getActiveRaffle from "../functions/getActiveRaffle.ts"
 
 const supabaseUrl = Deno.env.get("supabase_url")
 
 export const handler: Handlers = {
   async GET(_req, ctx){
-    const {data: raffleList, error} = await supabase.from("raffles").select("*").or("status.eq.0, status.eq.1");
-    if(raffleList != undefined && raffleList.length > 0){
-      const props = {...raffleList![0], flyer: `${supabaseUrl}/storage/v1/object/public/${raffleList[0].flyer}`}
-      return ctx.render(props);
-    }else{
+    const raffle = await getActiveRaffle()
+    if(raffle === false){
       return ctx.render();
+    }else{
+      const props = {...raffle, flyer: `${supabaseUrl}/storage/v1/object/public/${raffle.flyer}`}
+      return ctx.render(props);
     }
   }
 }

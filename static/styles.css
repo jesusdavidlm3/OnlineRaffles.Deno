@@ -57,12 +57,17 @@ button:hover{
   cursor: pointer;
 }
 
-input{
+input, textarea{
   background-color: #778da9;
   border: 3px solid #1b263b;
   border-radius: 10px;
   width: 90%;
   height: 30px;
+}
+
+textarea{
+  height: 300px;
+  resize: vertical;
 }
 
 input::placeholder{
@@ -247,7 +252,31 @@ h1{
   width: calc(85vw - 20px);
   padding: 20px;
   border-radius: 10px;
-  gap: 15px;
+  text-align: center;
+}
+
+/* .TicketsSelector h3{
+  margin: 0;
+} */
+
+.TicketsSelector .numbersContainer{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  justify-content: center;
+}
+
+.TicketsSelector .numbersContainer button{
+  width: 15%;
+}
+
+.TicketsSelector .numbersContainer .sold{
+  background-color: gray;
+}
+
+.TicketsSelector .numbersContainer .selected{
+  background-color: teal;
 }
 
 .SupportLink{
@@ -477,4 +506,26 @@ h1{
   padding: 25px;
   border-radius: 15px;
   gap: 10px;
+}
+
+.SoldBar{
+  background-color: var(--elementColor);
+  height: 40px;
+  width: 70vw;
+  border-radius: 30px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+
+.SoldBar .SoldArea{
+  background-color: var(--componentColor);
+  height: 40px;
+}
+
+.SoldBar h4{
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  margin: 0;
 }

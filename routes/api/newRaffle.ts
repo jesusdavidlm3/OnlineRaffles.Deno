@@ -1,18 +1,19 @@
 import { Handlers, FreshContext } from "$fresh/server.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
 import uploadFlyer from "../../functions/uploadFlyer.ts"
-import { supabase } from "../../libs/supabase.ts";
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
+import createNewRaffle from "../../functions/createNewRaffle.ts";
 
 export const handler: Handlers = {
-    async POST(req: Request, ctx: FreshContext){
+    async POST(req: Request, _ctx: FreshContext){
         const apiUrl = Deno.env.get("front_url")
         const cookies = getCookies(req.headers)
-        const token = cookies.toke
+        const token = cookies.token
         const newToken = await verifyAndRenewToken(token)
         if(newToken === false){
             return Response.redirect(`${apiUrl}/`)
         }else{
+            console.log(newToken)
             const formData = await req.formData()
             const title = formData.get("title")?.toString()
             const description = formData.get("description")?.toString()
@@ -23,16 +24,17 @@ export const handler: Handlers = {
 
             const flyerData = await uploadFlyer(flyer)
 
-            const {data: info, error} = await supabase.from("raffles").insert([{
-                title: title,
-                description: description,
-                minBuy: minBuy,
-                ticketsLimit: ticketsLimit,
-                ticketPrice: ticketPrice,
-                flyer: flyerData?.fullPath
-            }])
+            const data = {
+                title: title!,
+                description: description!,
+                minBuy: minBuy!,
+                ticketsLimit: ticketsLimit!,
+                ticketPrice: ticketPrice!,
+                flyer: flyerData?.fullPath!
+            }
 
-            if(!error){
+            const response = await createNewRaffle(data)
+            if(response === true){
                 const response = new Response(null, {status: 200})
                 setCookie(response.headers, {
                     name: "token",
@@ -40,7 +42,6 @@ export const handler: Handlers = {
                 })
                 return response
             }else{
-                console.log(error)
                 return new Response(null, {status: 500})
             }
         }
