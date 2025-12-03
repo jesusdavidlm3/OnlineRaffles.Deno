@@ -29,7 +29,7 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
         <>
             { raffleStatus == 1 && <h2>Esta rifa ya ah cerrado su venta</h2> }
 
-            { selectionMethod == 1 && raffleStatus == 0 &&
+            {/* { selectionMethod == 1 && raffleStatus == 0 &&
                 <RandomTickets
                     dolarPrice={dolarPrice!}
                     raffleId={raffleId}
@@ -38,7 +38,7 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
                     apiUrl={apiUrl}
                     minBuy={minBuy}
                 />
-            }
+            } */}
 
             { selectionMethod == 2 && raffleStatus == 0 &&
                 <TicketsSelector

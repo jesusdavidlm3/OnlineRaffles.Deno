@@ -65,7 +65,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
     return(
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
-            <button type="button" onClick={changeMethod}>Numeros al azar</button>
+            {/* <button type="button" onClick={changeMethod}>Numeros al azar</button> */}
             <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
             <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
             <div class="numbersContainer">
@@ -83,9 +83,13 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
             </div>
 
             <div class="pagination">
-                <button type="button" onClick={() => setPage(page-1)} disabled={page <= 1}>{page == 1 ? 0 : `${((page-1)*100)-99} - ${(page-1)*100}`}</button>
-                {`${(page*100)-99} - ${page*100}`}
-                <button type="button" onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>{`${((page+1)*100)-99} - ${(page+1)*100}`}</button>
+                { ticketsLimit <= 100 ? (<>
+                    {`${(page*100)-99} - ${page*100}`}
+                </>) : (<>
+                    <button type="button" onClick={() => setPage(page-1)} disabled={page <= 1}>{page == 1 ? 0 : `${((page-1)*100)-99} - ${(page-1)*100}`}</button>
+                    {`${(page*100)-99} - ${page*100}`}
+                    <button type="button" onClick={() => setPage(page+1)} disabled={(page * 100) >= ticketsLimit}>{`${((page+1)*100)-99} - ${(page+1)*100}`}</button>
+                </>) }
             </div>
 
             <form onSubmit={handleSubmit}>

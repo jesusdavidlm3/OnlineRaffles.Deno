@@ -98,6 +98,10 @@ h1{
   gap: 15px;
 }
 
+.PageBasis h1{
+  text-align: center;
+}
+
 .mainRaffle{
   display: flex;
   flex-direction: column;
@@ -253,6 +257,13 @@ h1{
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+}
+
+.TicketsSelector form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 /* .TicketsSelector h3{
@@ -420,6 +431,7 @@ h1{
 .dashboardRaffleTile img{
   max-width: 200px;
   max-height: 200px;
+  border-radius: 20px;
 }
 
 .dashboardRaffleTile h1, .dashboardRaffleTile h3{margin: 0;} 
@@ -468,6 +480,7 @@ h1{
 .Dashboard .listContainer .listItemMainDashboard img{
   max-width: 120px;
   max-height: 120px;
+  border-radius: 10px;
 }
 
 .loginPage{
