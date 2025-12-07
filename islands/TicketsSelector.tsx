@@ -66,7 +66,10 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
             {/* <button type="button" onClick={changeMethod}>Numeros al azar</button> */}
-            <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
+            <div className="totalAmountContainer">
+                <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
+                <h3>Monto total: {selectedNumbers.length == 0 ? 0 : (selectedNumbers.length * ticketPrice)}$</h3>
+            </div>
             <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
             <div class="numbersContainer">
                 {pageContent.map(item => {

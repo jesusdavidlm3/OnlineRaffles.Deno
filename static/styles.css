@@ -266,9 +266,13 @@ h1{
   gap: 4px;
 }
 
-/* .TicketsSelector h3{
+.TicketsSelector h3, .TicketsSelector h2{
   margin: 0;
-} */
+}
+
+.TicketsSelector .totalAmountContainer{
+  margin: 20px;
+}
 
 .TicketsSelector .numbersContainer{
   display: flex;
@@ -276,6 +280,7 @@ h1{
   align-items: center;
   gap: 3px;
   justify-content: center;
+  margin-top: 15px;
 }
 
 .TicketsSelector .numbersContainer button{
