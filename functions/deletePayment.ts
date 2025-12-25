@@ -1,11 +1,13 @@
-import { supabase } from "../libs/supabase.ts";
+import { execute } from "../libs/client.ts";
 
 export default async function deletePayment(paymentId: string) {
-    const {data: _data, error} = await supabase.from("tickets").delete().eq("id", paymentId)
-    console.log(_data)
-    if(!error){
-        return true
-    }else{
-        throw error
-    }
+    const data = await execute(`DELETE * FROM tickets WHERE id = ${paymentId}`);
+    return data;
+    // const {data: _data, error} = await supabase.from("tickets").delete().eq("id", paymentId)
+    // console.log(_data)
+    // if(!error){
+    //     return true
+    // }else{
+    //     throw error
+    // }
 } 

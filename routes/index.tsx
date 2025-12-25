@@ -9,11 +9,12 @@ const supabaseUrl = Deno.env.get("supabase_url")
 
 export const handler: Handlers = {
   async GET(_req, ctx){
-    const raffle = await getActiveRaffle()
+    const raffle = await getActiveRaffle();
     if(raffle === false){
       return ctx.render();
     }else{
-      const props = {...raffle, flyer: `${supabaseUrl}/storage/v1/object/public/${raffle.flyer}`}
+      // const props = {...raffle, flyer: `${supabaseUrl}/storage/v1/object/public/${raffle.flyer}`}
+      const props = raffle
       return ctx.render(props);
     }
   }
@@ -21,7 +22,8 @@ export const handler: Handlers = {
 
 export default function Home(props: PageProps) {
 
-  const currentRaffle: Iraffle = props.data;
+  const currentRaffle: Iraffle = props.data[0];
+  console.log(props.data)
 
   return (<>
     <UserAgreementsModal/>

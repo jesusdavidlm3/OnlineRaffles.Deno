@@ -1,4 +1,4 @@
-import { supabase } from "../libs/supabase.ts";
+import { executeQuery } from "../libs/client.ts";
 
 interface IgetAllRafflePayments{
     raffleId: string,
@@ -7,10 +7,12 @@ interface IgetAllRafflePayments{
 }
 
 export default async function getAllRafflePayments({raffleId, start, end}: IgetAllRafflePayments){
-    const {data: list, error} = await supabase.from("tickets").select("*").eq("raffleId", raffleId).range(start, end)
-    if(!error){
-        return list
-    }else{
-        throw error
-    }
+    const data = await executeQuery(`SELECT * FROM tickets WHERE raffleId = ${raffleId}`);
+    return data;
+    // const {data: list, error} = await supabase.from("tickets").select("*").eq("raffleId", raffleId).range(start, end)
+    // if(!error){
+    //     return list
+    // }else{
+    //     throw error
+    // }
 }

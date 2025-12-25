@@ -1,8 +1,8 @@
 import { Handlers, FreshContext } from "$fresh/server.ts";
 import { getCookies, setCookie } from "@std/http/cookie";
-import uploadFlyer from "../../functions/uploadFlyer.ts"
+// import uploadFlyer from "../../functions/uploadFlyer.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
-import createNewRaffle from "../../functions/createNewRaffle.ts";
+// import createNewRaffle from "../../functions/createNewRaffle.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, _ctx: FreshContext){
@@ -22,7 +22,7 @@ export const handler: Handlers = {
             const ticketsLimit = Number(formData.get("ticketsLimit")?.toString())
             const flyer = formData.get("flyerFile") as File
 
-            const flyerData = await uploadFlyer(flyer)
+            // const flyerData = await uploadFlyer(flyer)
 
             const data = {
                 title: title!,
@@ -30,20 +30,20 @@ export const handler: Handlers = {
                 minBuy: minBuy!,
                 ticketsLimit: ticketsLimit!,
                 ticketPrice: ticketPrice!,
-                flyer: flyerData?.fullPath!
+                // flyer: flyerData?.fullPath!
             }
 
-            const response = await createNewRaffle(data)
-            if(response === true){
-                const response = new Response(null, {status: 200})
-                setCookie(response.headers, {
-                    name: "token",
-                    value: newToken
-                })
-                return response
-            }else{
-                return new Response(null, {status: 500})
-            }
+            // const response = await createNewRaffle(data)
+            // if(response === true){
+            //     const response = new Response(null, {status: 200})
+            //     setCookie(response.headers, {
+            //         name: "token",
+            //         value: newToken
+            //     })
+            //     return response
+            // }else{
+            //     return new Response(null, {status: 500})
+            // }
         }
     }
 }

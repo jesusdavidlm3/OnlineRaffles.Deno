@@ -1,4 +1,4 @@
-import { supabase } from "../libs/supabase.ts"
+import { executeQuery } from "../libs/client.ts"
 
 interface getRaffleInfoResponse{
     thisRaffleId: string,
@@ -13,11 +13,15 @@ interface getRaffleInfoResponse{
 }
 
 export default async function getRaffleInfo(raffleId: string): Promise<getRaffleInfoResponse>{
-    const {data: data, error} = await supabase.rpc('GetAllRaffleInfo', {searchid: raffleId})
-    if(!error){
-        return data[0]
-    }else{
-        console.error(error)
-        throw error
-    }
+    const data = await executeQuery(`
+        SELECT * FROM raffles r JOIN tickets t ON r.id = t.raffleId WHERE r.id = ${raffleId}     
+    `);
+    return data;
+    // const {data: data, error} = await supabase.rpc('GetAllRaffleInfo', {searchid: raffleId})
+    // if(!error){
+    //     return data[0]
+    // }else{
+    //     console.error(error)
+    //     throw error
+    // }
 }

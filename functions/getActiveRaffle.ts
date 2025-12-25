@@ -1,14 +1,6 @@
-import { supabase } from "../libs/supabase.ts";
+import { executeQuery } from "../libs/client.ts";
 
 export default async function getActiveRaffle(){
-    const {data: data, error} = await supabase.from("raffles").select("*").or("status.eq.0, status.eq.1");
-    if(!error){
-        if(data.length == 0){
-            return false
-        }else{
-            return data[0]
-        }
-    }else{
-        throw error
-    }
+    const data = await executeQuery("SELECT * FROM raffles WHERE status = 0 OR status = 1");
+    return data
 }
