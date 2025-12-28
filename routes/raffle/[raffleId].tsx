@@ -12,7 +12,8 @@ export const handler: Handlers = {
     async GET(_req, ctx){
         const raffleId = ctx.params.raffleId
         const data = await getRaffleInfo(raffleId)
-        return ctx.render({...data!, flyer: `${supabaseUrl}/storage/v1/object/public/${data.flyer}`});
+        console.log(data)
+        return ctx.render(data);
     }
 }
 
@@ -26,15 +27,15 @@ export default function raffle(props: PageProps){
             <h1>{currentRaffle.title}</h1>
             <img src={currentRaffle.flyer} class="flyer" draggable={false}/>
             <p style={{whiteSpace: 'pre-line'}}>{currentRaffle.description}</p>
-            <SoldBar sold={currentRaffle.soldtickets} total={currentRaffle.ticketsLimit}/>
+            <SoldBar sold={currentRaffle.soldnumbers} total={currentRaffle.ticketslimit}/>
             <Buyer
-                ticketPrice={currentRaffle.ticketPrice}
-                raffleId={currentRaffle.thisRaffleId}
+                ticketPrice={currentRaffle.ticketprice}
+                raffleId={currentRaffle.id}
                 apiUrl={apiUrl!}
-                minBuy={currentRaffle.minBuy}
+                minBuy={currentRaffle.minbuy}
                 raffleStatus={currentRaffle.status}
-                soldNumbers={currentRaffle.soldtickets}
-                ticketsLimit={currentRaffle.ticketsLimit}
+                soldNumbers={currentRaffle.soldnumbers}
+                ticketsLimit={currentRaffle.ticketslimit}
             />
             <Footer/>
         </div>

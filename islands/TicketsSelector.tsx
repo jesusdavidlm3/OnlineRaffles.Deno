@@ -11,8 +11,8 @@ interface IticketsSelector{
     apiUrl: string
 }
 
-export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, changeMethod, soldNumbers, ticketsLimit, minBuy, apiUrl}: IticketsSelector){
-    
+export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, changeMethod, soldNumbers = [], ticketsLimit, minBuy = 1, apiUrl}: IticketsSelector){
+
     // Logica de UI
     const [loading, setLoading] = useState<boolean>(false)
     const [totalAmount, setTotalAmount] = useState<number>(0)

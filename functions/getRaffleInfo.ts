@@ -12,11 +12,23 @@ interface getRaffleInfoResponse{
     soldtickets: number[]
 }
 
-export default async function getRaffleInfo(raffleId: string): Promise<getRaffleInfoResponse>{
+export default async function getRaffleInfo(raffleId: string){
     const data = await executeQuery(`
-        SELECT * FROM raffles r JOIN tickets t ON r.id = t.raffleId WHERE r.id = ${raffleId}     
-    `);
-    return data;
+        SELECT 
+            r.id,
+            r.status,
+            r.title,
+            r.minBuy,
+            r.description,
+            r.flyer,
+            r.ticketsLimit AS ticketsLimit,
+            r.ticketsPrice,
+            (SELECT array_agg(n) FROM tickets t, unnest(t.numbers) AS n WHERE raffleId = $1) as soldnumbers
+        FROM raffles r LEFT JOIN tickets t ON r.id = t.raffleId
+        WHERE r.id = $1     
+    `, [raffleId]);
+    console.log(data[0])
+    return data[0];
     // const {data: data, error} = await supabase.rpc('GetAllRaffleInfo', {searchid: raffleId})
     // if(!error){
     //     return data[0]

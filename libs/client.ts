@@ -11,14 +11,27 @@ const client = new Client({
 
 export async function executeQuery(query: string, params?: string[]){
     await client.connect();
-    const result = await client.queryObject(query);
-    await client.end();
-    return result.rows;
+    if(params != undefined){
+        const result = await client.queryObject(query, params);
+        await client.end();
+        return result.rows;
+    }else{
+        const result = await client.queryObject(query);
+        await client.end();
+        return result.rows;
+    }
 }
 
 export async function execute(query: string, params?: string[]){
     await client.connect();
-    const result = await client.queryObject(query);
-    await client.end();
-    return result.rows;
+    if(params != undefined){
+        const result = await client.queryObject(query, params);
+        await client.end();
+        return result.rows;
+    }else{
+        const result = await client.queryObject(query);
+        await client.end();
+        return result.rows;
+    }
+
 }
