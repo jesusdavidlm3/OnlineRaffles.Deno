@@ -1,6 +1,6 @@
 import { Handlers, FreshContext } from "$fresh/server.ts";
 import { setCookie } from "@std/http/cookie";
-import loginOnSupabase from "../../functions/loginOnSupabase.ts"
+import loginOnDb from "../../functions/loginOnDb.ts"
 import { createToken } from "../../libs/jwt.ts";
 
 export const handler: Handlers = {
@@ -9,7 +9,7 @@ export const handler: Handlers = {
         const email = formData.get("email")!.toString()
         const password = formData.get("password")!.toString()
 
-        const data = await loginOnSupabase(email, password)
+        const data = await loginOnDb(email, password)
 
         if(data === true){
             const token = await createToken(email)

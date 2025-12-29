@@ -11,10 +11,4 @@ export default async function verifyTicketOnDb(identification: string){
         WHERE (r.status = 0 OR r.status = 1) AND t.identification = $1;
     `, [identification]);
     return data;
-    // const {data, error} = await supabase.rpc('VerifyNumber', {searchid: identification})
-    // if(error){
-    //     return error
-    // }else{
-    //     return data
-    // }
 }

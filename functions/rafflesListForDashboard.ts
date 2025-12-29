@@ -5,7 +5,7 @@ export default async function rafflesListForDashboard(pagination: number){
     const end = pagination * 5
     const start = pagination == 1 ? 0 : end - 4
 
-    const data = await executeQuery(`SELECT * FROM raffles LIMIT ${start} OFFSET ${end}`)
+    const data = await executeQuery(`SELECT * FROM raffles LIMIT $1 OFFSET $2`, [end, start])
     return data
     // const {data: list, error} = await supabase.from('raffles').select('*').range(start, end)
     // if(!error){
