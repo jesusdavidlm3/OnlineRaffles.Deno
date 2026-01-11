@@ -6,7 +6,7 @@ import createNewRaffle from "../../functions/createNewRaffle.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, _ctx: FreshContext){
-        const apiUrl = Deno.env.get("front_url")
+        const apiUrl = Deno.env.get("FRONT_URL")
         const cookies = getCookies(req.headers)
         const token = cookies.token
         const newToken = await verifyAndRenewToken(token)

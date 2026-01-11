@@ -6,7 +6,7 @@ import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 import SoldBar from "../../components/SoldBar.tsx";
 
 const supabaseUrl = Deno.env.get("supabase_url")
-const apiUrl = Deno.env.get("front_url")
+const apiUrl = Deno.env.get("FRONT_URL")
 
 export const handler: Handlers = {
     async GET(_req, ctx){

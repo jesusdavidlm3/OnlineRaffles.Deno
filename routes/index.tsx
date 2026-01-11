@@ -4,6 +4,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { Iraffle } from "../types/raffle.ts";
 import Footer from "../components/Footer.tsx"
 import getActiveRaffle from "../functions/getActiveRaffle.ts"
+import { bucketStorage } from "../libs/client.ts";
 
 const supabaseUrl = Deno.env.get("supabase_url")
 
@@ -13,8 +14,9 @@ export const handler: Handlers = {
     if(raffle === false){
       return ctx.render();
     }else{
-      // const props = {...raffle, flyer: `${supabaseUrl}/storage/v1/object/public/${raffle.flyer}`}
-      const props = raffle
+      const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${raffle[0].flyer}`)
+      const props = {...raffle[0], flyerUrl: flyerUrl}
+      console.log(props)
       return ctx.render(props);
     }
   }
@@ -22,8 +24,7 @@ export const handler: Handlers = {
 
 export default function Home(props: PageProps) {
 
-  const currentRaffle: Iraffle = props.data[0];
-  console.log(props.data)
+  const currentRaffle = props.data;
 
   return (<>
     <UserAgreementsModal/>
@@ -33,7 +34,7 @@ export default function Home(props: PageProps) {
       {currentRaffle != undefined ? (
         <a href={`/raffle/${currentRaffle.id}`} class="mainRaffle">
           <h2>{currentRaffle.title}</h2>
-          <img src={currentRaffle.flyer} class="flyer" draggable={false}/>
+          <img src={currentRaffle.flyerUrl} class="flyer" draggable={false}/>
           Toca para participar
           <p style={{whiteSpace: "pre-line"}}>{currentRaffle.description}</p>
         </a>

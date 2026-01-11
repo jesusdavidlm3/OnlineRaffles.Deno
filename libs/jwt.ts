@@ -1,6 +1,6 @@
 import { createJwt, isJwtValid, isJwtExpired, getJwtPayload } from "@popov/jwt";
 
-const secret = Deno.env.get("secret")
+const secret = Deno.env.get("SECRET")
 
 export async function verifyAndRenewToken(token: string): Promise<string | false>{
     if(token === undefined){

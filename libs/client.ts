@@ -3,11 +3,11 @@ import { S3Client } from "@bradenmacdonald/s3-lite-client";
 
 //Cliente de postgres
 const client = new Client({
-    hostname: Deno.env.get("DB_URL"),
-    password: Deno.env.get("DB_PASS"),
-    port: Deno.env.get("DB_PORT"),
-    user: Deno.env.get("DB_USER"),
-    database: Deno.env.get("DB_NAME"),
+    hostname: Deno.env.get("DATABASE_URL"),
+    password: Deno.env.get("PGPASSWORD"),
+    port: Deno.env.get("PGPORT"),
+    user: Deno.env.get("PGUSER"),
+    database: Deno.env.get("PGUSERPGDATABASE"),
     host_type: "tcp"
 })
 
@@ -26,9 +26,9 @@ export async function executeQuery(query: string, params?: any[]){
 
 // Cliente de S3
 export const bucketStorage = new S3Client({
-    endPoint: Deno.env.get("STORAGE_ENDPOINT")!,
-    region: Deno.env.get("REGION")!,
-    accessKey: Deno.env.get("BUCKET_ACCESS_KEY_ID")!,
-    secretKey: Deno.env.get("BUCKET_SECRET_ACCESS_KEY")!,
-    bucket: Deno.env.get("BUCKET_NAME")
+    endPoint: Deno.env.get("AWS_ENDPOINT_URL")!,
+    region: Deno.env.get("AWS_DEFAULT_REGION")!,
+    accessKey: Deno.env.get("AWS_ACCESS_KEY_ID")!,
+    secretKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
+    bucket: Deno.env.get("AWS_S3_BUCKET_NAME")
 })
