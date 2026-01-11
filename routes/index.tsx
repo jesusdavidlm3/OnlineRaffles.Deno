@@ -14,7 +14,7 @@ export const handler: Handlers = {
     if(raffle === false){
       return ctx.render();
     }else{
-      const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${raffle[0].flyer}`)
+      const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${raffle[0].flyer}`, {expirySeconds: 10})
       const props = {...raffle[0], flyerUrl: flyerUrl}
       console.log(props)
       return ctx.render(props);

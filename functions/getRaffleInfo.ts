@@ -27,7 +27,6 @@ export default async function getRaffleInfo(raffleId: string){
         FROM raffles r LEFT JOIN tickets t ON r.id = t.raffleId
         WHERE r.id = $1     
     `, [raffleId]);
-    console.log(data[0])
     return data[0];
     // const {data: data, error} = await supabase.rpc('GetAllRaffleInfo', {searchid: raffleId})
     // if(!error){

@@ -4,6 +4,7 @@ import Buyer from "../../islands/Buyer.tsx"
 import Footer from "../../components/Footer.tsx";
 import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 import SoldBar from "../../components/SoldBar.tsx";
+import { bucketStorage } from "../../libs/client.ts";
 
 const supabaseUrl = Deno.env.get("supabase_url")
 const apiUrl = Deno.env.get("FRONT_URL")
@@ -12,8 +13,9 @@ export const handler: Handlers = {
     async GET(_req, ctx){
         const raffleId = ctx.params.raffleId
         const data = await getRaffleInfo(raffleId)
+        const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${data.flyer}`)
         console.log(data)
-        return ctx.render(data);
+        return ctx.render({...data, flyerUrl: flyerUrl});
     }
 }
 
@@ -25,7 +27,7 @@ export default function raffle(props: PageProps){
         <NavBar/>
         <div class="PageBasis">
             <h1>{currentRaffle.title}</h1>
-            <img src={currentRaffle.flyer} class="flyer" draggable={false}/>
+            <img src={currentRaffle.flyerUrl} class="flyer" draggable={false}/>
             <p style={{whiteSpace: 'pre-line'}}>{currentRaffle.description}</p>
             <SoldBar sold={currentRaffle.soldnumbers} total={currentRaffle.ticketslimit}/>
             <Buyer

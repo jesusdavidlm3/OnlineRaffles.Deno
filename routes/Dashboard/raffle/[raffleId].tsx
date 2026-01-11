@@ -7,6 +7,7 @@ import DeactivateRaffleButton from "../../../islands/DeactivateRaffleButton.tsx"
 import ArchiveRaffleButton from "../../../islands/AchiveRaffleButton.tsx";
 import getRaffleInfo from "../../../functions/getRaffleInfo.ts";
 import { Ipayload } from "../../../types/JWTpayload.ts";
+import { bucketStorage } from "../../../libs/client.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -19,13 +20,12 @@ export const handler: Handlers = {
         }else{
             const raffleId = ctx.params.raffleId
             const payload = getJwtPayload(token) as Ipayload
-            const supabaseUrl = Deno.env.get("supabase_url")
             const raffleInfo = await getRaffleInfo(raffleId)
+            const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${raffleInfo.flyer}`, {expirySeconds: 10})
             const response = await ctx.render({
-                raffle: raffleInfo,
+                raffle: {...raffleInfo, flyerUrl: flyerUrl},
                 email: payload.email,
-                imageUrl: `${supabaseUrl}/storage/v1/object/public/`,
-                apiUrl: apiUrl
+                apiUrl: apiUrl,
             })
             setCookie(response.headers, {
                 name: token,
@@ -42,6 +42,7 @@ export  default function RaffleDashboard(props: PageProps){
     const email = props.data.email
     const imageUrl = props.data.imageUrl
     const apiUrl = props.data.apiUrl
+    console.log(props.data)
     return(
         <div class="PageBasis Dashboard">
             <div class="dashboardNavBar">
@@ -51,7 +52,7 @@ export  default function RaffleDashboard(props: PageProps){
                 </div>
             </div>
             <div class="dashboardRaffleTile">
-                <img src={`${imageUrl}${raffle.flyer}`}/>
+                <img src={raffle.flyerUrl}/>
                 <div>
                     <h1>{raffle.title}</h1>
                     <h3>Precio del numero: ${raffle.ticketPrice}</h3>

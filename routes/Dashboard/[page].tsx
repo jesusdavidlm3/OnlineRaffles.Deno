@@ -4,6 +4,7 @@ import { getCookies, setCookie } from "@std/http/cookie";
 import { getJwtPayload } from "@popov/jwt";
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
 import { Ipayload } from "../../types/JWTpayload.ts";
+import { bucketStorage } from "../../libs/client.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
@@ -22,12 +23,17 @@ export const handler: Handlers = {
                 return Response.redirect(`${apiUrl}/`)
             }else{
                 const payload = getJwtPayload(token) as Ipayload
-                const list = await rafflesListForDashboard(Number(pagination))
+                const rawList = await rafflesListForDashboard(Number(pagination))
+                const list = await Promise.all(rawList.map(async (listItem) => {
+                    const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${listItem.flyer}`, {expirySeconds: 10})
+                    const data = {...listItem, flyerUrl: flyerUrl}
+                    return data
+                }))
+                console.log(list)
                 const response = await ctx.render({
                     page: pagination,
                     list: list,
                     email: payload.email,
-                    imageUrl: `${supabaseUrl}/storage/v1/object/public/`,
                     apiUrl: apiUrl
                 })
                 setCookie(response.headers, {
@@ -55,7 +61,7 @@ export default function DashboardPage(props: PageProps){
             <div class="listContainer">
                 {data.list.map(item => 
                     <a key={item} href={`/Dashboard/raffle/${item.id}`} class="listItem listItemMainDashboard">
-                        <img src={`${data.imageUrl}${item.flyer}`}/>
+                        <img src={item.flyerUrl}/>
                         <h1>{item.title}</h1>
                     </a>
                 )}
