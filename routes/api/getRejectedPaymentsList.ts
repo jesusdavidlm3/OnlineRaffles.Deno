@@ -2,11 +2,12 @@ import { Handlers, FreshContext } from "$fresh/server.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
 import { executeQuery } from "../../libs/client.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
+import getRejectedPaymentList from "../../functions/getRejectedPaymentsList.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, _ctx: FreshContext){
         const apiUrl = Deno.env.get("FRONT_URL")
-        const cookies = getCookies(req.headers)
+        const cookies = await getCookies(req.headers)
         const token = cookies.token
         const newToken = await verifyAndRenewToken(token)
         if(newToken === false){
@@ -14,8 +15,17 @@ export const handler: Handlers = {
         }else{
             const requestData = await req.json()
             const raffleId = requestData.raffleId
-            const data = await executeQuery("SELECT * FROMS tickets WHERE raffleId = $1 AND status = 2", [raffleId]);
-            return data;
+            const list = await getRejectedPaymentList(raffleId)
+            if (list){
+                const response = new Response(JSON.stringify(list))
+                setCookie(response.headers, {
+                    name: "token",
+                    value: newToken
+                })
+                return response;
+            }else{
+                return new Response(null, {status: 500});
+            }
             // if(!error){
             //     const response = new Response(JSON.stringify(list))
             //     setCookie(response.headers, {

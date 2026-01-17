@@ -14,6 +14,7 @@ export const handler: Handlers = {
         }else{
             const requestData = await req.json()
             const raffleId = requestData.raffleId
+            // console.log(requestData)
             const list = await getPendingPaymentList(raffleId)
             if(list){
                 const response = new Response(JSON.stringify(list))

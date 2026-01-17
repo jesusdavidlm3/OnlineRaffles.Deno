@@ -11,7 +11,7 @@ interface Ipayment{
     id: string,
     name: string,
     identification: string,
-    dolarPrice: number,
+    dolarprice: number,
     numbers: number[],
     phone: string, 
     email: string,
@@ -24,7 +24,6 @@ interface Ipayment{
 // si la rifa esta cerrada pero no archivada se visualizaran todos los pagos con paginacion al no haber pagos pendientes.
 
 export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}: IpaymentList){
-    
     const [currentList, setCurrentList] = useState([])
     const [page, setPage] = useState<number>(1)
     const [pendingPayments, setPendingPayments] = useState<boolean>(true)   //Si no hay pagos pendientes se traen los
@@ -116,9 +115,9 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                     <div class="info">
                         <h4>Nombre: {item.name}</h4>
                         <h4>Cedula: {item.identification}</h4>
-                        <h4>Dolar a la compra: Bs. {Number(item.dolarPrice).toFixed(2)}</h4>
+                        <h4>Dolar a la compra: Bs. {Number(item.dolarprice).toFixed(2)}</h4>
                         <h4>Numeros: {item.numbers.map(number => `${number}, `)}</h4>
-                        <h4>Monto cancelado: Bs. {Number(item.dolarPrice * item.numbers.length).toFixed(2)}</h4>
+                        <h4>Monto cancelado: Bs. {Number(item.dolarprice * item.numbers.length).toFixed(2)}</h4>
                         <h4>Telefono: {item.phone}</h4>
                         <h4>Correo: {item.email}</h4>
                     </div>

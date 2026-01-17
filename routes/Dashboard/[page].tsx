@@ -29,7 +29,7 @@ export const handler: Handlers = {
                     const data = {...listItem, flyerUrl: flyerUrl}
                     return data
                 }))
-                console.log(list)
+                // console.log(list)
                 const response = await ctx.render({
                     page: pagination,
                     list: list,

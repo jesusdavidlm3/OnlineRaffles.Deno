@@ -6,7 +6,7 @@ export const handler: Handlers = {
         const requestData = await req.json()
 
         const res = await verifyTicketOnDb(requestData.identification)
-        console.log(res)
+        // console.log(res)
         return new Response(JSON.stringify(res))
     }
 }

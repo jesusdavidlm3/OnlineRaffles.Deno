@@ -13,7 +13,7 @@ export const handler: Handlers = {
         if(newToken === false){
             return Response.redirect(`${apiUrl}/`)
         }else{
-            console.log(newToken)
+            // console.log(newToken)
             const formData = await req.formData()
             const title = formData.get("title")?.toString()
             const description = formData.get("description")?.toString()

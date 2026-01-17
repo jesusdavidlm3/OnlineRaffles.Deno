@@ -7,7 +7,7 @@ interface IgetAllRafflePayments{
 }
 
 export default async function getAllRafflePayments({raffleId, start, end}: IgetAllRafflePayments){
-    const data = await executeQuery(`SELECT * FROM tickets WHERE raffleId = ${raffleId}`);
+    const data = await executeQuery(`SELECT * FROM tickets WHERE raffleid = $1`, [raffleId]);
     return data;
     // const {data: list, error} = await supabase.from("tickets").select("*").eq("raffleId", raffleId).range(start, end)
     // if(!error){

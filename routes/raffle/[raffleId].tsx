@@ -14,7 +14,7 @@ export const handler: Handlers = {
         const raffleId = ctx.params.raffleId
         const data = await getRaffleInfo(raffleId)
         const flyerUrl = await bucketStorage.presignedGetObject(`flyers/${data.flyer}`)
-        console.log(data)
+        // console.log(data)
         return ctx.render({...data, flyerUrl: flyerUrl});
     }
 }
