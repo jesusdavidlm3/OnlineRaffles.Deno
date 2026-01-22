@@ -44,8 +44,6 @@ export const handler: Handlers = {
             reference: reference!
         }
 
-        console.log(data)
-
         const response = await buyTickets(data)
 
         if (response === true){
