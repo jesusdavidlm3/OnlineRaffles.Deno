@@ -1,6 +1,6 @@
 import { Handlers, FreshContext } from "$fresh/server.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
-import { executeQuery } from "../../libs/client.ts"
+import { bucketStorage, executeQuery } from "../../libs/client.ts"
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
 import getRejectedPaymentList from "../../functions/getRejectedPaymentsList.ts";
 
@@ -15,8 +15,13 @@ export const handler: Handlers = {
         }else{
             const requestData = await req.json()
             const raffleId = requestData.raffleId
-            const list = await getRejectedPaymentList(raffleId)
-            if (list){
+            const rawList = await getRejectedPaymentList(raffleId)
+            if (rawList){
+                const list = await Promise.all(rawList.map(async(listItem) => {
+                    const flyerUrl = await bucketStorage.presignedGetObject(`receipts/${listItem.receipt}`, {expirySeconds: 1800})
+                    const data = {...listItem, receiptUrl: flyerUrl}
+                    return data;
+                }))
                 const response = new Response(JSON.stringify(list))
                 setCookie(response.headers, {
                     name: "token",

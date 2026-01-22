@@ -2,6 +2,7 @@ import { Handlers, FreshContext } from "$fresh/server.ts"
 import { getCookies, setCookie } from "@std/http/cookie";
 import { verifyAndRenewToken } from "../../libs/jwt.ts";
 import getAllRafflePayments from "../../functions/getAllRafflePayments.ts"
+import { bucketStorage } from "../../libs/client.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, _ctx: FreshContext){
@@ -16,8 +17,13 @@ export const handler: Handlers = {
             const raffleId = requestData.raffleId
             const end = requestData.page * 10
             const start = requestData.page === 1 ? 0 : end - 9
-            const list = await getAllRafflePayments({raffleId, start, end})
-            if(list){
+            const rawList = await getAllRafflePayments({raffleId, start, end})
+            if(rawList){
+                const list = await Promise.all(rawList.map(async(listItem) => {
+                    const flyerUrl = await bucketStorage.presignedGetObject(`receipts/${listItem.receipt}`, {expirySeconds: 1800})
+                    const data = {...listItem, receiptUrl: flyerUrl}
+                    return data;
+                }))
                 const response = new Response(JSON.stringify(list))
                 setCookie(response.headers, {
                     name: "token",
