@@ -9,7 +9,8 @@ const client = new Client({
     user: Deno.env.get("PGUSER"),
     database: Deno.env.get("PGUSERPGDATABASE"),
     host_type: "tcp",
-    connection: {attempts: 2, interval: 2}
+    connection: {attempts: 3, interval: 3},
+    tls: {enabled: true}
 })
 
 export async function executeQuery(query: string, params?: any[]){

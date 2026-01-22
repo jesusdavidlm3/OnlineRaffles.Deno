@@ -41,10 +41,10 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
 
         const form = e.target as HTMLFormElement
         const formData = new FormData(form)
+        const receiptInput = document.getElementById("receipt") as HTMLInputElement
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("raffleId", raffleId.toString())
-        const fileInput = document.getElementById("fileInput") as HTMLInputElement
-        formData.append("receiptFile", fileInput!.files[0])
+        formData.append("receipt", receiptInput.files[0])
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("numbers", selectedNumbers.toString())
 
@@ -102,7 +102,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
                 <input name="email" placeholder="Correo: " required disabled={loading} type="email"/>
                 <input name="reference" placeholder="Referencia de pago: " required disabled={loading} type="number"/>
                 <label style={{alignSelf: 'start', marginLeft: '15px'}}>Comprobante de pago:</label>
-                <input name="receipts" type="file" accept="image/*, .pdf" id="fileInput" required disabled={loading}/>
+                <input name="receipt" type="file" accept="image/*" id="receipt" required disabled={loading}/>
                 { selectedNumbers.length >= minBuy ? (
                     <button type="submit" disabled={loading}>{loading ? "Cargando":"Comprar"}</button>
                 ):(

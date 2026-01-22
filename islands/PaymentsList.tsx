@@ -16,7 +16,8 @@ interface Ipayment{
     phone: string, 
     email: string,
     status: number,
-    receipt: string
+    receipt: string,
+    receiptUrl: string
 }
 
 // Primero se piden 10 pagos pendientes, al agotar la lista se piden 10 mas. los pendientes tienen prioridad
@@ -125,7 +126,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                         <button type="button" onClick={() => confirmPayment(item.id)}>Aceptar</button>
                         <button type="button" onClick={() => rejectPayment(item.id)}>Rechazar</button>
                         {item.status == 2 && <button type="button" onClick={() => deletePayment(item.id)}>Eliminar</button>}
-                        <a href={`${imageUrl}${item.receipt}`} target="_blank"><button type="button">Ver comprobante</button></a>
+                        <a href={item.receiptUrl} target="_blank"><button type="button">Ver comprobante</button></a>
                     </div>}
                 </div>
             ))}

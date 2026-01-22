@@ -1,7 +1,7 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-// import uploadReceipt from "../../functions/uploadReceipt.ts"
+import uploadReceipt from "../../functions/uploadReceipt.ts"
 import { crypto } from "@std/crypto/crypto";
-// import buyTickets from "../../functions/buyTickets.ts"
+import buyTickets from "../../functions/buyTickets.ts"
 
 interface Idata{
     name: string,
@@ -27,9 +27,9 @@ export const handler: Handlers = {
         const numbers = rawNumbers!.map((item: string) => Number(item))
         const reference = formData.get("reference")?.toString()
 
-        const receipt = formData.get("receiptFile") as File
+        const receipt = formData.get("receipt") as File
 
-        // const receiptRes = await uploadReceipt(receipt)
+        const receiptRes = await uploadReceipt(receipt)
 
         const data = {
             id: uuid!,
@@ -40,16 +40,18 @@ export const handler: Handlers = {
             email: email!,
             numbers: numbers!,
             dolarPrice: dolarPrice!,
-            // receipt: receiptRes?.fullPath!,
+            receipt: receiptRes,
             reference: reference!
         }
 
-        // const response = await buyTickets(data)
+        console.log(data)
 
-        // if (response === true){
-        //     return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
-        // }else{
-        //     return new Response(null, {status: 500})
-        // }
+        const response = await buyTickets(data)
+
+        if (response === true){
+            return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
+        }else{
+            return new Response(null, {status: 500})
+        }
     }
 }
