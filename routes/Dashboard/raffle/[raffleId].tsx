@@ -42,7 +42,7 @@ export  default function RaffleDashboard(props: PageProps){
     const email = props.data.email
     const imageUrl = props.data.imageUrl
     const apiUrl = props.data.apiUrl
-    // console.log(props.data)
+    // console.log(props)
     return(
         <div class="PageBasis Dashboard">
             <div class="dashboardNavBar">
@@ -60,10 +60,10 @@ export  default function RaffleDashboard(props: PageProps){
                     <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
                 </div>
                 {raffle.status == 0 &&
-                    <DeactivateRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
+                    <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 1 &&
-                    <ArchiveRaffleButton raffleId={raffle.thisRaffleId} apiUrl={apiUrl}/>
+                    <ArchiveRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>
                 }
                 {raffle.status == 2 &&
                     <h4>Rifa Archivada</h4>

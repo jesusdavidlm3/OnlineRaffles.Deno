@@ -9,7 +9,7 @@ const client = new Client({
     user: Deno.env.get("PGUSER"),
     database: Deno.env.get("PGUSERPGDATABASE"),
     host_type: "tcp",
-    connection: {attempts: 3, interval: 3},
+    connection: {attempts: 3, interval: 3000},
     tls: {enabled: true}
 })
 
