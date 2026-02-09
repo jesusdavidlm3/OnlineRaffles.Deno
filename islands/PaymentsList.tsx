@@ -126,7 +126,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                         <button type="button" onClick={() => confirmPayment(item.id)}>Aceptar</button>
                         <button type="button" onClick={() => rejectPayment(item.id)}>Rechazar</button>
                         {item.status == 2 && <button type="button" onClick={() => deletePayment(item.id)}>Eliminar</button>}
-                        <a href={item.receiptUrl} target="_blank"><button type="button">Ver comprobante</button></a>
+                        <a href={item.receiptUrl} target="_blank"><button type="button" disabled={raffleStatus === 2}>Ver comprobante</button></a>
                     </div>}
                 </div>
             ))}
