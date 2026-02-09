@@ -4,7 +4,7 @@ import TicketsSelector from "./TicketsSelector.tsx"
 import Accounts from "../components/Accounts.tsx"
 
 interface Ibuyer{
-    ticketPrice?: number,
+    ticketPrice: number,
     raffleId: string,
     apiUrl: string,
     minBuy: number,
@@ -13,10 +13,10 @@ interface Ibuyer{
     ticketsLimit: number
 }
 
-export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffleStatus, soldNumbers, ticketsLimit}: Ibuyer){
+export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbers, ticketsLimit, ticketPrice}: Ibuyer){
 
     const [dolarPrice, setDolarPrice] = useState<number>()
-    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(2)
+    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(1)
 
     fetch('https://ve.dolarapi.com/v1/dolares/oficial')
     .then(async data => {
@@ -29,7 +29,7 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
         <>
             { raffleStatus == 1 && <h2>Esta rifa ya ah cerrado su venta</h2> }
 
-            {/* { selectionMethod == 1 && raffleStatus == 0 &&
+            { selectionMethod == 1 && raffleStatus == 0 &&
                 <RandomTickets
                     dolarPrice={dolarPrice!}
                     raffleId={raffleId}
@@ -38,9 +38,9 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
                     apiUrl={apiUrl}
                     minBuy={minBuy}
                 />
-            } */}
+            }
 
-            { selectionMethod == 2 && raffleStatus == 0 &&
+            {/* { selectionMethod == 2 && raffleStatus == 0 &&
                 <TicketsSelector
                     dolarPrice={dolarPrice!}
                     raffleId={raffleId}
@@ -51,7 +51,7 @@ export default function Buyer({ticketPrice = 1, raffleId, apiUrl, minBuy, raffle
                     minBuy={minBuy}
                     apiUrl={apiUrl}
                 />
-            }
+            } */}
 
             <Accounts/>
         </>

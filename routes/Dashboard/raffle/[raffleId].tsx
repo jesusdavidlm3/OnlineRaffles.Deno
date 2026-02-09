@@ -55,9 +55,9 @@ export  default function RaffleDashboard(props: PageProps){
                 <img src={raffle.flyerUrl}/>
                 <div>
                     <h1>{raffle.title}</h1>
-                    <h3>Precio del numero: ${raffle.ticketPrice}</h3>
-                    <h3>Limite de numeros: {raffle.ticketsLimit}</h3>
-                    <h3>Minimo de numeros por venta: {raffle.minBuy}</h3>
+                    <h3>Precio del numero: ${raffle.ticketsprice}</h3>
+                    <h3>Limite de numeros: {raffle.ticketslimit}</h3>
+                    <h3>Minimo de numeros por venta: {raffle.minbuy}</h3>
                 </div>
                 {raffle.status == 0 &&
                     <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>

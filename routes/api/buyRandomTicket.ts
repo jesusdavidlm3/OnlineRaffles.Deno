@@ -1,7 +1,7 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-// import uploadReceipt from "../../functions/uploadReceipt.ts"
+import uploadReceipt from "../../functions/uploadReceipt.ts"
 import { crypto } from "@std/crypto/crypto";
-// import buyTickets from "../../functions/buyTickets.ts"
+import buyTickets from "../../functions/buyTickets.ts"
 import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 
 interface Idata{
@@ -26,16 +26,19 @@ export const handler: Handlers = {
         const ticketsQuantity = Number(formData.get("ticketsQuantity")?.toString())
         const dolarPrice = Number(formData.get("dolarPrice")?.toString())
         const receipt = formData.get("receiptFile") as File
-        // const receiptRes = await uploadReceipt(receipt)
+        const receiptRes = await uploadReceipt(receipt)
         const reference = formData.get("reference")?.toString()
 
         const raffleData = await getRaffleInfo(raffleId!)
 
-        const soldNumbers = raffleData.soldtickets ? raffleData.soldtickets : []
+        console.log(raffleData)
+
+        const soldNumbers = raffleData.soldnumbers === null ? [] : raffleData.soldnumbers
         const numbersToSell: number[] = []
 
         while(numbersToSell.length < ticketsQuantity){
-            const posibleNumber = Math.floor(Math.random() * ((raffleData.ticketsLimit+1) - 1) + 0)
+            const posibleNumber = Math.floor(Math.random() * ((raffleData.ticketslimit+1) - 1) + 0)
+            console.log(posibleNumber)
             if(!soldNumbers.includes(posibleNumber)){
                 numbersToSell.push(posibleNumber)
             }
@@ -50,15 +53,17 @@ export const handler: Handlers = {
             email: email!,
             numbers: numbersToSell!,
             dolarPrice: dolarPrice!,
-            // receipt: receiptRes?.fullPath!,
+            receipt: receiptRes,
             reference: reference!
         }
 
-        // const response = await buyTickets(data)
-        // if(response === true){
-        //     return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
-        // }else{
-        //     return new Response(null, {status: 500})
-        // }
+        console.log(data)
+
+        const response = await buyTickets(data)
+        if(response === true){
+            return new Response(JSON.stringify({id: uuid}), {status: 201, headers: {'content-type': 'application/json'}})
+        }else{
+            return new Response(null, {status: 500})
+        }
     }
 }

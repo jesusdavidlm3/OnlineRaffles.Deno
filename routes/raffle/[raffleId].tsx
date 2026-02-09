@@ -6,7 +6,7 @@ import getRaffleInfo from "../../functions/getRaffleInfo.ts"
 import SoldBar from "../../components/SoldBar.tsx";
 import { bucketStorage } from "../../libs/client.ts";
 
-const supabaseUrl = Deno.env.get("supabase_url")
+// const supabaseUrl = Deno.env.get("supabase_url")
 const apiUrl = Deno.env.get("FRONT_URL")
 
 export const handler: Handlers = {
@@ -31,7 +31,7 @@ export default function raffle(props: PageProps){
             <p style={{whiteSpace: 'pre-line'}}>{currentRaffle.description}</p>
             <SoldBar sold={currentRaffle.soldnumbers} total={currentRaffle.ticketslimit}/>
             <Buyer
-                ticketPrice={currentRaffle.ticketprice}
+                ticketPrice={Number(currentRaffle.ticketsprice)}
                 raffleId={currentRaffle.id}
                 apiUrl={apiUrl!}
                 minBuy={currentRaffle.minbuy}

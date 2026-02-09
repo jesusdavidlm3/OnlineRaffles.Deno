@@ -9,16 +9,15 @@ interface IrandomTickets{
     minBuy: number
 }
 
-export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, changeMethod, apiUrl, minBuy = 1}: IrandomTickets){
+export default function RandomTickets({ticketPrice, raffleId, dolarPrice, changeMethod, apiUrl, minBuy = 1}: IrandomTickets){
 
     const [loading, setLoading] = useState(false)
-
     const [ticketsQuantity, setTicketsQuantity] = useState<number>(minBuy)
     const [totalAmount, setTotalAmount] = useState<number>(0)
 
     useEffect(() => {
         if(ticketsQuantity != 0){
-            setTotalAmount(dolarPrice * ticketPrice * ticketsQuantity)
+            setTotalAmount(ticketPrice * ticketsQuantity)
         } 
     }, [ticketsQuantity, dolarPrice])
 
@@ -51,7 +50,7 @@ export default function RandomTickets({ticketPrice = 1, raffleId, dolarPrice, ch
 
     return(<div class="RandomTickets">
         <h2>Compra tus numeros aqui!</h2>
-        <button type="button" onClick={changeMethod} disabled={loading}>Escoger numeros</button>
+        {/* <button type="button" onClick={changeMethod} disabled={loading}>Escoger numeros</button> */}
         <div class="Selector">
             <button
                 type="button"

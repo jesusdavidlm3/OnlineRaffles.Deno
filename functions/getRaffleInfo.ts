@@ -3,7 +3,7 @@ import { executeQuery } from "../libs/client.ts"
 interface getRaffleInfoResponse{
     thisRaffleId: string,
     title: string,
-    ticketPrice: number,
+    ticketsprice: number,
     description: string,
     ticketsLimit: number,
     flyer: string,
