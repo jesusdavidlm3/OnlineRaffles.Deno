@@ -58,6 +58,10 @@ export  default function RaffleDashboard(props: PageProps){
                     <h3>Precio del numero: ${raffle.ticketsprice}</h3>
                     <h3>Limite de numeros: {raffle.ticketslimit}</h3>
                     <h3>Minimo de numeros por venta: {raffle.minbuy}</h3>
+                    <h3>Moneda: {raffle.currency}</h3>
+                    {raffle.sellmethod == "select" && <h3>Venta: Numeros seleccionados</h3>}
+                    {raffle.sellmethod == "random" && <h3>Venta: Aleatoria</h3>}
+                    {raffle.sellmethod == "dual" && <h3>Venta: Numeros seleccionados o aleatorios</h3>}
                 </div>
                 {raffle.status == 0 &&
                     <DeactivateRaffleButton raffleId={raffle.id} apiUrl={apiUrl}/>

@@ -57,7 +57,7 @@ button:hover{
   cursor: pointer;
 }
 
-input, textarea{
+input, textarea, select{
   background-color: #778da9;
   border: 3px solid #1b263b;
   border-radius: 10px;

@@ -21,6 +21,8 @@ export const handler: Handlers = {
             const minBuy = Number(formData.get("minBuy")?.toString())
             const ticketsLimit = Number(formData.get("ticketsLimit")?.toString())
             const flyer = formData.get("flyerFile") as File
+            const currency = formData.get("currency")?.toString()
+            const sellMethod = formData.get("sellMethod")?.toString()
 
             const flyerData = await uploadFlyer(flyer)
 
@@ -30,7 +32,9 @@ export const handler: Handlers = {
                 minBuy: minBuy!,
                 ticketsLimit: ticketsLimit!,
                 ticketPrice: ticketPrice!,
-                flyer: flyerData
+                flyer: flyerData,
+                currency: currency,
+                sellMethod: sellMethod
             }
 
             const response = await createNewRaffle(data)

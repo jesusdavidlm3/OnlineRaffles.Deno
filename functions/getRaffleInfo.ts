@@ -23,6 +23,8 @@ export default async function getRaffleInfo(raffleId: string){
             r.flyer,
             r.ticketsLimit AS ticketsLimit,
             r.ticketsPrice,
+            r.currency,
+            r.sellmethod,
             (SELECT array_agg(n) FROM tickets t, unnest(t.numbers) AS n WHERE raffleId = $1) as soldnumbers
         FROM raffles r LEFT JOIN tickets t ON r.id = t.raffleId
         WHERE r.id = $1     

@@ -6,10 +6,12 @@ interface IcreateRaffle{
     minBuy: number,
     ticketsLimit: number,
     ticketPrice: number,
-    flyer: string
+    flyer: string,
+    currency: string,
+    sellMethod: string
 }
 
-export default async function createNewRaffle({title, description, minBuy, ticketPrice, ticketsLimit, flyer}: IcreateRaffle) {
+export default async function createNewRaffle({title, description, minBuy, ticketsLimit, ticketPrice, flyer, currency, sellMethod}: IcreateRaffle) {
     const _res = await executeQuery(`
         INSERT INTO raffles(
             title,
@@ -17,26 +19,13 @@ export default async function createNewRaffle({title, description, minBuy, ticke
             minBuy,
             ticketsLimit,
             ticketsPrice,
-            flyer
+            flyer,
+            currency,
+            sellmethod
         ) VALUES(
-            $1, $2, $3, $4, $5, $6
+            $1, $2, $3, $4, $5, $6, $7, $8
         )
-    `, [title, description, minBuy, ticketPrice, ticketsLimit, flyer])
+    `, [title, description, minBuy, ticketsLimit, ticketPrice, flyer, currency, sellMethod])
         
     return true
-
-    // const {data: _data, error} = await supabase.from("raffles").insert([{
-    //     title: title,
-    //     description: description,
-    //     minBuy: minBuy,
-    //     ticketsLimit: ticketsLimit,
-    //     ticketPrice: ticketPrice,
-    //     flyer: flyer
-    // }])
-    // if(!error){
-    //     return true
-    // }else{
-    //     console.log(error)
-    //     throw error
-    // }
 }
