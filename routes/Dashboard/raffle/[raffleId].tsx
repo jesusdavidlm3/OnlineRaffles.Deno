@@ -55,7 +55,11 @@ export  default function RaffleDashboard(props: PageProps){
                 <img src={raffle.flyerUrl}/>
                 <div>
                     <h1>{raffle.title}</h1>
-                    <h3>Precio del numero: ${raffle.ticketsprice}</h3>
+                    {raffle.currency === "Bolivares" ? (
+                        <h3>Precio del numero: Bs {raffle.ticketsprice}</h3>
+                    ):(
+                        <h3>Precio del numero: ${raffle.ticketsprice}</h3>
+                    )}
                     <h3>Limite de numeros: {raffle.ticketslimit}</h3>
                     <h3>Minimo de numeros por venta: {raffle.minbuy}</h3>
                     <h3>Moneda: {raffle.currency}</h3>

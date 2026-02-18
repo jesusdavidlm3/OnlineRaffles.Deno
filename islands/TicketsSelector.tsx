@@ -8,14 +8,17 @@ interface IticketsSelector{
     soldNumbers: number[],
     ticketsLimit: number,
     minBuy: number,
-    apiUrl: string
+    apiUrl: string,
+    currency: string,
+    sellmethod: string
 }
 
-export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, changeMethod, soldNumbers = [], ticketsLimit, minBuy = 1, apiUrl}: IticketsSelector){
+export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, changeMethod, soldNumbers = [], ticketsLimit, minBuy = 1, apiUrl, currency, sellmethod}: IticketsSelector){
 
     // Logica de UI
     const [loading, setLoading] = useState<boolean>(false)
-    const [totalAmount, setTotalAmount] = useState<number>(0)
+    const [totalAmountBs, setTotalAmountBs] = useState<number>(0)
+    const [totalAmountD, setTotalAmountD] = useState<number>(0)
 
     // Logica de funcionamiento
     const [page, setPage] = useState<number>(1)
@@ -31,7 +34,12 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
     }
 
     useEffect(() => {
-        setTotalAmount(selectedNumbers.length == 0 ? 0 : (dolarPrice * selectedNumbers.length * ticketPrice))
+        if(currency === "Bolivares"){
+            setTotalAmountBs(selectedNumbers.length == 0 ? 0 : (selectedNumbers.length * ticketPrice))
+        }else{
+            setTotalAmountD(selectedNumbers.length == 0 ? 0 : (selectedNumbers.length * ticketPrice))
+            setTotalAmountBs(selectedNumbers.length == 0 ? 0 : (dolarPrice * selectedNumbers.length * ticketPrice))
+        }
         updatePageContent()
     }, [page, selectedNumbers])
 
@@ -42,11 +50,19 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
         const form = e.target as HTMLFormElement
         const formData = new FormData(form)
         const receiptInput = document.getElementById("receipt") as HTMLInputElement
+        const currencySelect = document.getElementById("currencySelect")?.value
         formData.append("dolarPrice", dolarPrice.toString())
         formData.append("raffleId", raffleId.toString())
         formData.append("receipt", receiptInput.files[0])
-        formData.append("dolarPrice", dolarPrice.toString())
         formData.append("numbers", selectedNumbers.toString())
+
+        if(currency === "Bolivares"){
+            formData.append("currency", "Bolivares")
+        }else if(currency === "Dolares"){
+            formData.append("currency", "Dolares")
+        }else{
+            formData.append("currency", currencySelect)
+        }
 
         const res = await fetch(`${apiUrl}/api/buySelectedTickets`, {
             method: "post",
@@ -65,10 +81,17 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
     return(
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
-            {/* <button type="button" onClick={changeMethod}>Numeros al azar</button> */}
+            {sellmethod === "dual" && <button type="button" onClick={changeMethod}>Numeros al azar</button>} 
             <div className="totalAmountContainer">
-                <h2>Monto total: {totalAmount.toFixed(2)} Bs</h2>
-                <h3>Monto total: {selectedNumbers.length == 0 ? 0 : (selectedNumbers.length * ticketPrice)}$</h3>
+                {(currency === "Bolivares" || currency == "Dolares y Bolivares") && 
+                    <h2>Monto total: Bs. {totalAmountBs.toFixed(2)}</h2>            
+                }
+                {(currency === "Dolares y Bolivares") && 
+                    <h3>Monto total: ${totalAmountD}</h3>                
+                }
+                {(currency === "Dolares") && 
+                    <h2>Monto total: ${totalAmountD}</h2>                
+                }
             </div>
             <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
             <div class="numbersContainer">
@@ -101,6 +124,12 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
                 <input name="phone" placeholder="Telefono:" required disabled={loading} type="number"/>
                 <input name="email" placeholder="Correo: " required disabled={loading} type="email"/>
                 <input name="reference" placeholder="Referencia de pago: " required disabled={loading} type="number"/>
+                {currency === "Dolares y Bolivares" && 
+                    <select id="currencySelect" required placeholder="Metodo de pago">
+                        <option value="Bolivares">Bolivares</option>
+                        <option value="Dolares">Dolares</option>
+                    </select>
+                }
                 <label style={{alignSelf: 'start', marginLeft: '15px'}}>Comprobante de pago:</label>
                 <input name="receipt" type="file" accept="image/*" id="receipt" required disabled={loading}/>
                 { selectedNumbers.length >= minBuy ? (

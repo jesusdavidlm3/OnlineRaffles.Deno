@@ -38,6 +38,8 @@ export default function raffle(props: PageProps){
                 raffleStatus={currentRaffle.status}
                 soldNumbers={currentRaffle.soldnumbers}
                 ticketsLimit={currentRaffle.ticketslimit}
+                currency={currentRaffle.currency}
+                sellmethod={currentRaffle.sellmethod}
             />
             <Footer/>
         </div>

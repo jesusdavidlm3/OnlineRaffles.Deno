@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks"
+import { useState, useEffect } from "preact/hooks"
 import RandomTickets from "./RandomTickets.tsx"
 import TicketsSelector from "./TicketsSelector.tsx"
 import Accounts from "../components/Accounts.tsx"
@@ -10,13 +10,15 @@ interface Ibuyer{
     minBuy: number,
     raffleStatus: number,
     soldNumbers: number[],
-    ticketsLimit: number
+    ticketsLimit: number,
+    currency: string,
+    sellmethod: string
 }
 
-export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbers, ticketsLimit, ticketPrice}: Ibuyer){
+export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbers, ticketsLimit, ticketPrice, currency, sellmethod}: Ibuyer){
 
     const [dolarPrice, setDolarPrice] = useState<number>()
-    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(1)
+    const [selectionMethod, setSelectionMethod] = useState<1 | 2>(2)
 
     fetch('https://ve.dolarapi.com/v1/dolares/oficial')
     .then(async data => {
@@ -24,6 +26,12 @@ export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbe
         const dolar = await dolarRaw.json()
         setDolarPrice(dolar.promedio)
     })
+
+    useEffect(() => {
+        if(sellmethod === "random"){
+            setSelectionMethod(1)
+        }
+    }, []) 
 
     return(
         <>
@@ -37,10 +45,12 @@ export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbe
                     changeMethod={() => setSelectionMethod(2)}
                     apiUrl={apiUrl}
                     minBuy={minBuy}
+                    sellemethod={sellmethod}
+                    currency={currency}
                 />
             }
 
-            {/* { selectionMethod == 2 && raffleStatus == 0 &&
+            { selectionMethod == 2 && raffleStatus == 0 &&
                 <TicketsSelector
                     dolarPrice={dolarPrice!}
                     raffleId={raffleId}
@@ -50,8 +60,10 @@ export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbe
                     ticketsLimit={ticketsLimit}
                     minBuy={minBuy}
                     apiUrl={apiUrl}
+                    currency={currency}
+                    sellmethod={sellmethod}
                 />
-            } */}
+            }
 
             <Accounts/>
         </>

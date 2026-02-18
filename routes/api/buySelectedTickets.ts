@@ -26,6 +26,7 @@ export const handler: Handlers = {
         const rawNumbers = formData.get("numbers")?.toString().split(",")
         const numbers = rawNumbers!.map((item: string) => Number(item))
         const reference = formData.get("reference")?.toString()
+        const currency = formData.get("currency")?.toString()
 
         const receipt = formData.get("receipt") as File
 
@@ -41,7 +42,8 @@ export const handler: Handlers = {
             numbers: numbers!,
             dolarPrice: dolarPrice!,
             receipt: receiptRes,
-            reference: reference!
+            reference: reference!,
+            currency: currency
         }
 
         const response = await buyTickets(data)

@@ -10,7 +10,8 @@ interface IbuyTickets{
     numbers: number[],
     dolarPrice: number,
     receipt: string,
-    reference: string
+    reference: string,
+    currency: string
 }
 
 export default async function buyTickets(ticketInfo: IbuyTickets){
@@ -25,8 +26,9 @@ export default async function buyTickets(ticketInfo: IbuyTickets){
             numbers,
             dolarprice,
             receipt,
-            reference
-        ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)    
+            reference,
+            currency
+        ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)    
     `, [
         ticketInfo.id,
         ticketInfo.name,
@@ -37,25 +39,9 @@ export default async function buyTickets(ticketInfo: IbuyTickets){
         ticketInfo.numbers,
         ticketInfo.dolarPrice,
         ticketInfo.receipt,
-        ticketInfo.reference
+        ticketInfo.reference,
+        ticketInfo.currency
     ]);
     
     return true;
-    // const {data: _data, error} = await supabase.from("tickets").insert([{
-    //     id: ticketInfo.id,
-    //     name: ticketInfo.name,
-    //     identification: ticketInfo.identification,
-    //     raffleId: ticketInfo.raffleId,
-    //     phone: ticketInfo.phone,
-    //     email: ticketInfo.email,
-    //     numbers: ticketInfo.numbers,
-    //     dolarPrice: ticketInfo.dolarPrice,
-    //     receipt: ticketInfo.receipt,
-    //     reference: ticketInfo.reference
-    // }]).select()
-    // if(!error){
-    //     return true
-    // }else{
-    //     throw error
-    // }
 }
