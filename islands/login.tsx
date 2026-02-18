@@ -12,7 +12,7 @@ export default function LoginForm({apiUrl}: {apiUrl: string}){
         formData.append("password", passwordHash)
 
 
-        const res = await fetch(`${apiUrl}/api/login`, {
+        const res = await fetch(`/api/login`, {
             method: 'post',
             body: formData
         })

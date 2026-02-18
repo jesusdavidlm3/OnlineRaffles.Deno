@@ -64,7 +64,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
             formData.append("currency", currencySelect)
         }
 
-        const res = await fetch(`${apiUrl}/api/buySelectedTickets`, {
+        const res = await fetch(`/api/buySelectedTickets`, {
             method: "post",
             body: formData,
         })

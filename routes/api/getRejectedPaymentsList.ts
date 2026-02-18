@@ -6,7 +6,7 @@ import getRejectedPaymentList from "../../functions/getRejectedPaymentsList.ts";
 
 export const handler: Handlers = {
     async POST(req: Request, _ctx: FreshContext){
-        const apiUrl = Deno.env.get("FRONT_URL")
+        const apiUrl = Deno.env.get("RAILWAY_PUBLIC_DOMAIN")
         const cookies = await getCookies(req.headers)
         const token = cookies.token
         const newToken = await verifyAndRenewToken(token)

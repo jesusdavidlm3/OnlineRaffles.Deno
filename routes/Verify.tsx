@@ -2,7 +2,7 @@ import NavBar from "../islands/NavBar.tsx"
 import Vierifier from "../islands/Verifier.tsx"
 import Footer from "../components/Footer.tsx"
 
-const apiUrl = Deno.env.get("FRONT_URL")
+const apiUrl = Deno.env.get("RAILWAY_PUBLIC_DOMAIN")
 
 export default function verify(){
     return(<>

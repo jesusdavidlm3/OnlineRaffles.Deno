@@ -10,7 +10,7 @@ export const handler: Handlers = {
         const token = cookies.token
         const newToken = await verifyAndRenewToken(token)
         if(newToken === false){
-            const apiUrl = Deno.env.get("FRONT_URL")
+            const apiUrl = Deno.env.get("RAILWAY_PUBLIC_DOMAIN")
             return Response.redirect(`${apiUrl}/`)
         }else{
             const response = await rejectPayment(reqData.ticketId)

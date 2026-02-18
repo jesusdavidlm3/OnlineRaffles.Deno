@@ -44,7 +44,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
     }, [page])
 
     async function updateListElements(raffleId: string){
-        const res = await fetch(`${apiUrl}/api/getPendingPaymentsList`, {
+        const res = await fetch(`/api/getPendingPaymentsList`, {
             method: 'post',
             body: JSON.stringify({raffleId: raffleId})
         })
@@ -52,7 +52,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
         if(response.length > 0){
             setCurrentList(response)
         }else{
-            const rejectedRes = await fetch(`${apiUrl}/api/getRejectedPaymentsList`, {
+            const rejectedRes = await fetch(`/api/getRejectedPaymentsList`, {
                 method: 'post',
                 body: JSON.stringify({raffleId: raffleId})
             })
@@ -67,7 +67,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
     }
 
     async function getAllElements(){
-        const res = await fetch(`${apiUrl}/api/getAllRafflePayments`,{
+        const res = await fetch(`/api/getAllRafflePayments`,{
             method: 'post',
             body: JSON.stringify({raffleId: raffleId, page: page})
         })
@@ -100,7 +100,7 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
     }
 
     async function deletePayment(ticketId: string){
-        const res = await fetch(`${apiUrl}/api/deletePayment`, {
+        const res = await fetch(`/api/deletePayment`, {
             method: 'delete',
             body: JSON.stringify({ticketId: ticketId})
         })

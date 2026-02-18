@@ -7,7 +7,7 @@ import SoldBar from "../../components/SoldBar.tsx";
 import { bucketStorage } from "../../libs/client.ts";
 
 // const supabaseUrl = Deno.env.get("supabase_url")
-const apiUrl = Deno.env.get("FRONT_URL")
+const apiUrl = Deno.env.get("RAILWAY_PUBLIC_DOMAIN")
 
 export const handler: Handlers = {
     async GET(_req, ctx){

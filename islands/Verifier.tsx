@@ -18,7 +18,7 @@ export default function Verifier({apiUrl}: Iverifier){
 
     const verify = async() => {
         const identification = document.getElementById("inputId") as HTMLInputElement
-        const res = await fetch(`${apiUrl}/api/verifyTicket`,{
+        const res = await fetch(`/api/verifyTicket`,{
             body: JSON.stringify({identification: identification.value}),
             method: 'post'
         })

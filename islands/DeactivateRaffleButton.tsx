@@ -6,7 +6,7 @@ interface IDeactivateRaffleButton{
 export default function DeactivateRaffleButton({raffleId, apiUrl}: IDeactivateRaffleButton){
     
     const deactivateRaffle = async() => {
-        const res = await fetch(`${apiUrl}/api/deactivateRaffle`, {
+        const res = await fetch(`/api/deactivateRaffle`, {
             method: "post",
             body: JSON.stringify({raffleId: raffleId})
         })

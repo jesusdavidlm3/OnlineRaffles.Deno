@@ -11,7 +11,7 @@ import { bucketStorage } from "../../../libs/client.ts";
 
 export const handler: Handlers = {
     async GET(req: Request, ctx: FreshContext){
-        const apiUrl = Deno.env.get("FRONT_URL")
+        const apiUrl = Deno.env.get("RAILWAY_PUBLIC_DOMAINUBLIC_DOMAIN")
         const cookies = getCookies(req.headers)
         const token = cookies.token
         const newToken = await verifyAndRenewToken(token)

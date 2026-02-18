@@ -6,7 +6,7 @@ interface IArchiveRaffleButton{
 
 export default function ArchiveRaffleButton({raffleId, apiUrl}: IArchiveRaffleButton){
     const archiveRaffle = async() => {
-        const res = await fetch(`${apiUrl}/api/archiveRaffle`, {
+        const res = await fetch(`/api/archiveRaffle`, {
             method: "post",
             body: JSON.stringify({raffleId: raffleId})
         })
