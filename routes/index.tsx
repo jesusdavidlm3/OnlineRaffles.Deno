@@ -35,7 +35,7 @@ export default function Home(props: PageProps) {
         <a href={`/raffle/${currentRaffle.id}`} class="mainRaffle">
           <h2>{currentRaffle.title}</h2>
           <img src={currentRaffle.flyerUrl} class="flyer" draggable={false}/>
-          Toca para participar
+          <h3 style={{margin: "0", color: "red", fontSize: "25"}}>Toca para participar</h3>
           <p style={{whiteSpace: "pre-line"}}>{currentRaffle.description}</p>
         </a>
       ):(

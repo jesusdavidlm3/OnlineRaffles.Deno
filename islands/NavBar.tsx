@@ -19,7 +19,7 @@ export default function NavBar(){
 
     return(
         <div class="NavBar">
-            <h4>Evelio</h4>
+            <img src="/logo.png" class="logo" draggable={false}/>
             <img src="/menu-icon.png" class="menuIcon" onClick={changeState}/>
             <div class={`${menuBackdropAnim} menuBackDrop`}>
                 <div class={`${menuAnim} menu`}>

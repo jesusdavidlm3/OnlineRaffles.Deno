@@ -7,7 +7,7 @@ const client = new Client({
     password: Deno.env.get("PGPASSWORD"),
     port: Deno.env.get("PGPORT"),
     user: Deno.env.get("PGUSER"),
-    database: Deno.env.get("PGUSERPGDATABASE"),
+    database: Deno.env.get("PGDATABASE"),
     host_type: "tcp",
     connection: {attempts: 5, interval: 1000},
     tls: {enabled: true}

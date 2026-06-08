@@ -8,9 +8,11 @@ export default function Support(){
             <h1>Soporte</h1>
             <a class="SupportLink">
                 <img src="/wsLogo.webp"/>
-                <div class="Button">
-                    Toca aqui para contactar con soporte
-                </div>
+                <a href="https://wa.me/qr/4CZMLBM3II64F1" target="_blank">
+                    <div class="Button">
+                        Toca aqui para contactar con soporte
+                    </div>
+                </a>
             </a>
         </div>
         <Footer/>

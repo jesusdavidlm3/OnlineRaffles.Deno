@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root{
-  --baseColor: #1b263b;
-  --componentColor: #415a77;
-  --elementColor: #778da9;
+  --baseColor: #07222d;
+  --componentColor: #641980;
+  --elementColor: #9440B8;
   --baseColorHover: #233352;
 }
 
@@ -58,8 +58,8 @@ button:hover{
 }
 
 input, textarea, select{
-  background-color: #778da9;
-  border: 3px solid #1b263b;
+  background-color: var(--elementColor);
+  border: 3px solid var(--baseColor);
   border-radius: 10px;
   width: 90%;
   height: 30px;
@@ -151,6 +151,10 @@ h1{
   padding: 10px;
   width: calc(100vw - 20px);
   height: calc(10vh - 20px);
+}
+
+.NavBar .logo{
+  width: 35vw;
 }
 
 .NavBar .menuIcon{

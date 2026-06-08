@@ -20,7 +20,7 @@ export default function Buyer({raffleId, apiUrl, minBuy, raffleStatus, soldNumbe
     const [dolarPrice, setDolarPrice] = useState<number>()
     const [selectionMethod, setSelectionMethod] = useState<1 | 2>(2)
 
-    fetch('https://ve.dolarapi.com/v1/dolares/oficial')
+    fetch('https://ve.dolarapi.com/v1/euros/oficial')
     .then(async data => {
         const dolarRaw = data;
         const dolar = await dolarRaw.json()

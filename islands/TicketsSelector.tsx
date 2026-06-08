@@ -78,6 +78,18 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
         }
     }
 
+    function fillWithZeros(original: number){
+        if(original > 0 && original <= 9){
+            return `00${original}`
+        }else if(original >= 10 && original <= 99){
+            return `0${original}`
+        }else if(original >= 1000){
+            return "0000"
+        }else{
+            return original
+        }
+    }
+
     return(
         <div class="TicketsSelector">
             <h2>Compra tus numeros aqui!</h2>
@@ -99,11 +111,11 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
                     if(!(item <= ticketsLimit)){
                         return 
                     }else if (selectedNumbers.includes(item)){
-                        return <button key={item} type="button" class="selected" onClick={() => setSelectedNumbers(selectedNumbers.filter(s => s!=item))}>{item}</button>
+                        return <button key={item} type="button" class="selected" onClick={() => setSelectedNumbers(selectedNumbers.filter(s => s!=item))}>{fillWithZeros(item)}</button>
                     }else if(soldNumbers.includes(item)){
-                        return <button key={item} type="button" class="sold">{item}</button>
+                        return <button key={item} type="button" class="sold">{fillWithZeros(item)}</button>
                     }else{
-                        return <button key={item} type="button" onClick={() => setSelectedNumbers([...selectedNumbers, item])}>{item}</button>
+                        return <button key={item} type="button" onClick={() => setSelectedNumbers([...selectedNumbers, item])}>{fillWithZeros(item)}</button>
                     }
                 })}
             </div>
