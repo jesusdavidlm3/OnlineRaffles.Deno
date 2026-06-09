@@ -19,7 +19,10 @@ export default function NavBar(){
 
     return(
         <div class="NavBar">
-            <img src="/logo.png" class="logo" draggable={false}/>
+            <div>
+                <img src="/logo.png" class="logo" draggable={false}/>
+                <img src="/loterialogo.png" style={{width: "14vw"}} draggable={false}/>
+            </div>
             <img src="/menu-icon.png" class="menuIcon" onClick={changeState}/>
             <div class={`${menuBackdropAnim} menuBackDrop`}>
                 <div class={`${menuAnim} menu`}>

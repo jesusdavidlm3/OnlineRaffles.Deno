@@ -126,8 +126,8 @@ h1{
 }
 
 .UserAgreeModal{
-  width: calc(80vw - 30px);
-  height: calc(55vh - 30px);
+  width: calc(85vw - 30px);
+  height: calc(75vh - 30px);
   background-color: var(--componentColor);
   padding: 15px;
   border-radius: 20px;
@@ -137,9 +137,14 @@ h1{
   align-items: center;
   color: white;
   text-align: center;
+  overflow-y: scroll;
 }
 
 .UserAgreeModal p{
+  margin: 5 0 0 0;
+}
+
+.UserAgreeModal h3{
   margin: 0;
 }
 
