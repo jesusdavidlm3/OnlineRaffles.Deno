@@ -84,7 +84,7 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
         }else if(original >= 10 && original <= 99){
             return `0${original}`
         }else if(original >= 1000){
-            return "0000"
+            return "000"
         }else{
             return original
         }
@@ -99,10 +99,10 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
                     <h2>Monto total: Bs. {totalAmountBs.toFixed(2)}</h2>            
                 }
                 {(currency === "Dolares y Bolivares") && 
-                    <h3>Monto total: ${totalAmountD}</h3>                
+                    <h3>Monto total: ${totalAmountD.toFixed(2)}</h3>                
                 }
                 {(currency === "Dolares") && 
-                    <h2>Monto total: ${totalAmountD}</h2>                
+                    <h2>Monto total: ${totalAmountD.toFixed(2)}</h2>                
                 }
             </div>
             <h3>Seleccionados: {selectedNumbers.map(n => `${n}, `)}</h3>
