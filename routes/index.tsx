@@ -30,7 +30,6 @@ export default function Home(props: PageProps) {
     <UserAgreementsModal/>
     <NavBar/>
     <div class="PageBasis">
-      <h1>Pagina Principal</h1>
       {currentRaffle != undefined ? (
         <a href={`/raffle/${currentRaffle.id}`} class="mainRaffle">
           <h2>{currentRaffle.title}</h2>

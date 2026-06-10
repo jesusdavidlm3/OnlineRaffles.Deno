@@ -10,7 +10,9 @@ interface Iticket{
     ticketstatus: number,
     title: string,
     clientname: string,
-    numbers: number[]
+    numbers: number[],
+    identification: number,
+    phone: string
 }
 
 export default function Verifier({apiUrl}: Iverifier){
@@ -27,12 +29,14 @@ export default function Verifier({apiUrl}: Iverifier){
     }
 
     return(<>
-        <input placeholder="Numero de ticket cedula:" class="input" id="inputId"/>
+        <input placeholder="Numero de ticket o cedula:" class="input" id="inputId"/>
         <button type="button" onClick={verify}>Verificar</button>
         <div class="listContainer">
             {tickets.map((item: Iticket) => <div key={item.id} class="listItem ticket">
                 <h1>Rifa: {item.title}</h1>
                 <h3>Cliente: {item.clientname}</h3>
+                <h3>Cedula: {item.identification}</h3>
+                <h3>Cedula: {item.phone}</h3>
                 <h3>Numeros: {item.numbers.map(item => <Fragment key={item}>{item}, </Fragment>)}</h3>
                 {item.ticketstatus == 0 && <h3>⌛Pendiente por verificar pago</h3>}
                 {item.ticketstatus == 1 && <h3>✅Compra verificada</h3>}
