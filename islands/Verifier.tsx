@@ -27,7 +27,7 @@ export default function Verifier({apiUrl}: Iverifier){
     }
 
     return(<>
-        <input placeholder="Numero de cedula:" class="input" id="inputId"/>
+        <input placeholder="Numero de ticket cedula:" class="input" id="inputId"/>
         <button type="button" onClick={verify}>Verificar</button>
         <div class="listContainer">
             {tickets.map((item: Iticket) => <div key={item.id} class="listItem ticket">

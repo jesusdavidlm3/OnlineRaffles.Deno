@@ -8,7 +8,7 @@ export default async function verifyTicketOnDb(identification: string){
             t.numbers,
             r.title
         FROM tickets t JOIN raffles r ON t.raffleid = r.id
-        WHERE (r.status = 0 OR r.status = 1) AND t.identification = $1;
-    `, [identification]);
+        WHERE (r.status = 0 OR r.status = 1) AND (t.identification = $1 OR t.numbers @> ARRAY[$2::integer]);
+    `, [identification, Number(identification)]);
     return data;
 }
