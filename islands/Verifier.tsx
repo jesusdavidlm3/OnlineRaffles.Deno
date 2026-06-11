@@ -33,7 +33,7 @@ export default function Verifier({apiUrl}: Iverifier){
         <button type="button" onClick={verify}>Verificar</button>
         <div class="listContainer">
             {tickets.map((item: Iticket) => <div key={item.id} class="listItem ticket">
-                <h1>Rifa: {item.title}</h1>
+                <h1>{item.title}</h1>
                 <h3>Cliente: {item.clientname}</h3>
                 <h3>Cedula: {item.identification}</h3>
                 <h3>Cedula: {item.phone}</h3>

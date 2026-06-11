@@ -9,8 +9,8 @@ export default function verify(){
         <NavBar/>
         <div class="PageBasis">
             <div class="VerifyPage">
-                <h1>Verificacion</h1>
-                <p>A continuation ingrese su numero de cedula para verificar la compra de sus tickets</p>
+                <h1>VERIFICACIÓN</h1>
+                <p>A continuation ingrese su numero de cedula o ticket para verificar su compra.</p>
                 <Vierifier apiUrl={apiUrl!}/>
             </div>
         </div>
