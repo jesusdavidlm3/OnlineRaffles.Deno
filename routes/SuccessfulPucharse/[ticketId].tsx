@@ -1,6 +1,7 @@
 import { Handlers, FreshContext, PageProps } from "$fresh/server.ts";
 import getNumbersForATicket from "../../functions/getNumbersForATicket.ts"
 import { Fragment } from "preact"
+import { fillWithZeros } from "../../functions/fillNumbersWithZeros.ts"
 
 export const handler: Handlers = {
     async GET(_req: Request, ctx: FreshContext){
@@ -16,7 +17,7 @@ export default function SuccessfulPucharse(props: PageProps){
         <div class="SuccessfulPucharse">
             <img src="/check-icon.png" draggable={false}/>
             <h1>Compra realizada exitosamente</h1>
-            <h3>Numeros comprados: {props.data.numbers.map((item: number) => <Fragment key={item}>{item},</Fragment>)}</h3>
+            <h3>Numeros comprados: {props.data.numbers.map((item: number) => <Fragment key={item}>{fillWithZeros(item)},</Fragment>)}</h3>
             <a href="/"><h3>Volver</h3></a>        
         </div>
     )

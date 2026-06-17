@@ -1,4 +1,5 @@
 import { useState, useEffect } from "preact/hooks"
+import { fillWithZeros } from "../functions/fillNumbersWithZeros.ts"
 
 interface IpaymentList{
     raffleId: string,
@@ -8,6 +9,7 @@ interface IpaymentList{
 }
 
 interface Ipayment{
+    ticketsprice: number;
     id: string,
     name: string,
     identification: string,
@@ -117,8 +119,8 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                         <h4>Nombre: {item.name}</h4>
                         <h4>Cedula: {item.identification}</h4>
                         <h4>Dolar a la compra: Bs. {Number(item.dolarprice).toFixed(2)}</h4>
-                        <h4>Numeros: {item.numbers.map(number => `${number}, `)}</h4>
-                        <h4>Monto cancelado: Bs. {Number(item.dolarprice * item.numbers.length).toFixed(2)}</h4>
+                        <h4>Numeros: {item.numbers.map(number => `${fillWithZeros(number)}, `)}</h4>
+                        <h4>Monto cancelado: Bs. {Number(item.dolarprice * item.numbers.length * item.ticketsprice).toFixed(2)}</h4>
                         <h4>Telefono: {item.phone}</h4>
                         <h4>Correo: {item.email}</h4>
                     </div>

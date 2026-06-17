@@ -1,4 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
+import { fillWithZeros } from "../functions/fillNumbersWithZeros.ts"
 
 interface IticketsSelector{
     ticketPrice: number,
@@ -75,18 +76,6 @@ export default function TicketsSelector({ticketPrice = 1, raffleId, dolarPrice, 
 
         if(res.status == 201){
             globalThis.location.replace(`/SuccessfulPucharse/${ticketInfo.id}`)
-        }
-    }
-
-    function fillWithZeros(original: number){
-        if(original > 0 && original <= 9){
-            return `00${original}`
-        }else if(original >= 10 && original <= 99){
-            return `0${original}`
-        }else if(original >= 1000){
-            return "000"
-        }else{
-            return original
         }
     }
 
