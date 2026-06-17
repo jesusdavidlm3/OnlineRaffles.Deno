@@ -98,6 +98,11 @@ h1{
   gap: 15px;
 }
 
+.PageBasis p{
+  width: 90vw;
+  text-align: center;
+}
+
 .PageBasis h1{
   text-align: center;
 }
@@ -159,7 +164,7 @@ h1{
 }
 
 .NavBar .logo{
-  width: 35vw;
+  width: 20vw;
 }
 
 .NavBar .menuIcon{
