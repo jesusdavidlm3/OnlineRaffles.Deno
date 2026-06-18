@@ -42,7 +42,6 @@ export  default function RaffleDashboard(props: PageProps){
     const email = props.data.email
     const imageUrl = props.data.imageUrl
     const apiUrl = props.data.apiUrl
-    // console.log(props)
     return(
         <div class="PageBasis Dashboard">
             <div class="dashboardNavBar">
@@ -85,6 +84,7 @@ export  default function RaffleDashboard(props: PageProps){
                     apiUrl={apiUrl}
                     imageUrl={imageUrl}
                     raffleStatus={raffle.status}
+                    ticketsprice={Number(raffle.ticketsprice)}
                 />
             </div>
         </div>

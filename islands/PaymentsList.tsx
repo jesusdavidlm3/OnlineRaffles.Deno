@@ -6,6 +6,7 @@ interface IpaymentList{
     apiUrl: string,
     imageUrl: string,
     raffleStatus: number
+    ticketsprice: number
 }
 
 interface Ipayment{
@@ -20,13 +21,14 @@ interface Ipayment{
     status: number,
     receipt: string,
     receiptUrl: string
+    reference: string
 }
 
 // Primero se piden 10 pagos pendientes, al agotar la lista se piden 10 mas. los pendientes tienen prioridad
 // Despues de agotar los pendientes se pediran los rechazados para comunicarse y confirmar o liberar los numeros
 // si la rifa esta cerrada pero no archivada se visualizaran todos los pagos con paginacion al no haber pagos pendientes.
 
-export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}: IpaymentList){
+export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus, ticketsprice}: IpaymentList){
     const [currentList, setCurrentList] = useState([])
     const [page, setPage] = useState<number>(1)
     const [pendingPayments, setPendingPayments] = useState<boolean>(true)   //Si no hay pagos pendientes se traen los
@@ -120,7 +122,8 @@ export default function PaymentsList({raffleId, apiUrl, imageUrl, raffleStatus}:
                         <h4>Cedula: {item.identification}</h4>
                         <h4>Dolar a la compra: Bs. {Number(item.dolarprice).toFixed(2)}</h4>
                         <h4>Numeros: {item.numbers.map(number => `${fillWithZeros(number)}, `)}</h4>
-                        <h4>Monto cancelado: Bs. {Number(item.dolarprice * item.numbers.length * item.ticketsprice).toFixed(2)}</h4>
+                        <h4>Monto cancelado: Bs. {Number(item.dolarprice * item.numbers.length * ticketsprice).toFixed(2)}</h4>
+                        <h4>Referencia: {item.reference}</h4>
                         <h4>Telefono: {item.phone}</h4>
                         <h4>Correo: {item.email}</h4>
                     </div>
